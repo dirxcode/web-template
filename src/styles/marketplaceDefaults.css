@@ -16,7 +16,6 @@
 :root {
   /* ================ Colors ================ */
 
-  --colorPastelPink: #fbf0ef;
   /**
    * Marketplace color comes by default from src/config/brandingConfig.js
    * It overwrites these CSS Properties.
