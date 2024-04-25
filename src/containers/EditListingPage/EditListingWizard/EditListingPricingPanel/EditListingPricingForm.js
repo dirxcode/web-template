@@ -22,11 +22,17 @@ const { Money } = sdkTypes;
 
 const getPriceValidators = (listingMinimumPriceSubUnits, marketplaceCurrency, intl) => {
   const priceRequiredMsgId = { id: 'EditListingPricingForm.priceRequired' };
+ 
   const priceRequiredMsg = intl.formatMessage(priceRequiredMsgId);
   const priceRequired = validators.required(priceRequiredMsg);
 
+  console.log("listingMinimumPriceSubUnits", listingMinimumPriceSubUnits)
+  console.log("marketplaceCurrency", marketplaceCurrency)
+
   const minPriceRaw = new Money(listingMinimumPriceSubUnits, marketplaceCurrency);
+
   const minPrice = formatMoney(intl, minPriceRaw);
+  
   const priceTooLowMsgId = { id: 'EditListingPricingForm.priceTooLow' };
   const priceTooLowMsg = intl.formatMessage(priceTooLowMsgId, { minPrice });
   const minPriceRequired = validators.moneySubUnitAmountAtLeast(

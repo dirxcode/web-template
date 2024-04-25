@@ -157,6 +157,7 @@ const EditListingWizardTab = props => {
   };
 
   const panelProps = tab => {
+    const userListingType = listing?.attributes?.publicData?.listingType || "";
     return {
       className: css.panel,
       errors,
@@ -171,14 +172,17 @@ const EditListingWizardTab = props => {
       submitButtonText: tabSubmitButtonText,
       listingTypes: config.listing.listingTypes,
       onManageDisableScrolling,
+      userListingType: userListingType,
       onSubmit: values => {
         return onCompleteEditListingWizardTab(tab, values);
       },
     };
   };
 
+  
   // TODO: add missing cases for supported tabs
   switch (tab) {
+    
     case DETAILS: {
       return (
         <EditListingDetailsPanel
@@ -189,6 +193,15 @@ const EditListingWizardTab = props => {
       );
     }
     case PRICING_AND_STOCK: {
+      const userListingType = listing?.attributes?.publicData?.listingType || "";
+      let minimumPrice = config.listingMinimumPriceSubUnits;
+      if(userListingType == "daily-rental"){
+        minimumPrice = 1000;
+      } if(userListingType == "weekly-rental"){
+        minimumPrice = 3500;
+      }if(userListingType == "monthly-rental"){
+        minimumPrice = 5000;
+      }
       return (
         <EditListingPricingAndStockPanel
           {...panelProps(PRICING_AND_STOCK)}
@@ -198,11 +211,20 @@ const EditListingWizardTab = props => {
       );
     }
     case PRICING: {
+      const userListingType = listing?.attributes?.publicData?.listingType || "";
+      let minimumPrice = config.listingMinimumPriceSubUnits;
+      if(userListingType == "daily-rental"){
+        minimumPrice = 1000;
+      } if(userListingType == "weekly-rental"){
+        minimumPrice = 3500;
+      }if(userListingType == "monthly-rental"){
+        minimumPrice = 5000;
+      }
       return (
         <EditListingPricingPanel
           {...panelProps(PRICING)}
           marketplaceCurrency={config.currency}
-          listingMinimumPriceSubUnits={config.listingMinimumPriceSubUnits}
+          listingMinimumPriceSubUnits={minimumPrice}
         />
       );
     }
@@ -215,8 +237,10 @@ const EditListingWizardTab = props => {
       return <EditListingLocationPanel {...panelProps(LOCATION)} />;
     }
     case AVAILABILITY: {
+      const userListingType = listing?.attributes?.publicData?.listingType || "";
       return (
         <EditListingAvailabilityPanel
+        userListingType={userListingType}
           allExceptions={allExceptions}
           weeklyExceptionQueries={weeklyExceptionQueries}
           monthlyExceptionQueries={monthlyExceptionQueries}

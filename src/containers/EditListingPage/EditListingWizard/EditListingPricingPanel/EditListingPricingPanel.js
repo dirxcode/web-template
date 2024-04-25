@@ -20,7 +20,13 @@ const getInitialValues = params => {
   const { listing } = params;
   const { price } = listing?.attributes || {};
 
-  return { price };
+  const listingType = listing?.attributes?.publicData?.listingType || "";
+
+  console.log("getInitialValues price", listing?.attributes);
+
+  
+
+  return { price, listingType };
 };
 
 const EditListingPricingPanel = props => {
