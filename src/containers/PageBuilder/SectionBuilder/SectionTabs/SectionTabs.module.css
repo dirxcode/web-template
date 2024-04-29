@@ -1,0 +1,52 @@
+@import '../../../../styles/customMediaQueries.css';
+
+.root {
+    background-color: white;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+  
+.txtTab{
+    background-color: aliceblue;
+}
+
+.Tabs {
+    display: flex;
+    flex-direction: column;
+}
+
+.Tabs .nav {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+  
+.Tabs .nav li {
+    margin-right: 30px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.Tabs .nav li.active {
+    font-weight: bold;
+    color: #77bb41;
+    border-bottom: 4px solid #77bb41;
+}
+
+.Tabs .outlet {
+/* border: 1px solid #ccc;
+padding: 10px; */
+display: flex;
+justify-content: space-around;
+}
+
+.Tabs .column {
+    flex: 1;
+    padding: 60px 10px; /* Adjust spacing between columns */
+}
+  
+.Tabs .column > div {
+    margin-bottom: 20px; /* Adjust spacing between items */
+}

@@ -7,13 +7,46 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
+
+import { lenderSectionId, customPageId, } from './CMSPage.duck';
+import { getListingsById } from '../../ducks/marketplaceData.duck';
+import { SectionTabs } from '../PageBuilder/SectionBuilder';
+
 const PageBuilder = loadable(() =>
   import(/* webpackChunkName: "PageBuilder" */ '../PageBuilder/PageBuilder')
 );
 
+const tabSectionType = 'tab';
+
 export const CMSPageComponent = props => {
-  const { params, pageAssetsData, inProgress, error } = props;
+  const { params, pageAssetsData, listings, inProgress, error  } = props;
   const pageId = params.pageId || props.pageId;
+
+  const pageData = pageAssetsData?.[customPageId]?.data;
+
+  const lenderSectionIdx = pageData?.sections.findIndex(s => s.sectionName === lenderSectionId);
+  const lenderSection = pageData?.sections[lenderSectionIdx];
+
+
+
+  // Define the necessary props for the custom section
+  const customLenderSection = {
+    ...lenderSection,
+    sectionId: lenderSectionId,
+    sectionType: tabSectionType,
+    listings: listings,
+  };
+
+  // Replace the original section with the custom section object
+  // in custom page data
+  const customPageData = pageData
+    ? {
+        ...pageData,
+        sections: pageData.sections.map((s, idx) =>
+          idx === lenderSectionIdx ? customLenderSection : s
+        ),
+      }
+    : pageData;
 
   if (!inProgress && error?.status === 404) {
     return <NotFoundPage />;
@@ -21,11 +54,27 @@ export const CMSPageComponent = props => {
 
   return (
     <PageBuilder
-      pageAssetsData={pageAssetsData?.[pageId]?.data}
+      pageAssetsData={customPageData}
       inProgress={inProgress}
       schemaType="Article"
+      options={{
+        sectionComponents: {
+          [tabSectionType]: { component: SectionTabs },
+        },}
+      }
     />
   );
+
+  // if(customPageData){
+    
+  // }else{
+  // return (
+  //   <PageBuilder
+  //     pageAssetsData={pageAssetsData?.[pageId]?.data}
+  //     inProgress={inProgress}
+  //     schemaType="Article"
+  //   />
+  // );}
 };
 
 CMSPageComponent.propTypes = {
@@ -35,7 +84,9 @@ CMSPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const { pageAssetsData, inProgress, error } = state.hostedAssets || {};
-  return { pageAssetsData, inProgress, error };
+  const { currentPageResultIds } = state.SearchPage;
+  const listings = getListingsById(state, currentPageResultIds);
+  return { pageAssetsData, listings, inProgress, error };
 };
 
 // Note: it is important that the withRouter HOC is **outside** the
