@@ -21,11 +21,6 @@ const getInitialValues = params => {
   const { price } = listing?.attributes || {};
 
   const listingType = listing?.attributes?.publicData?.listingType || "";
-
-  console.log("getInitialValues price", listing?.attributes);
-
-  
-
   return { price, listingType };
 };
 

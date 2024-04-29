@@ -220,7 +220,7 @@ ${chalk.dim(
 )}
 `,
       default: function() {
-        return 'MyMarketplace';
+        return 'Lendit';
       },
       when: function(answers) {
         return answers.showAdvancedSettings;

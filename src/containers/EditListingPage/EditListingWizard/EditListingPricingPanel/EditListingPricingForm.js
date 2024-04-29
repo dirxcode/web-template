@@ -26,9 +26,6 @@ const getPriceValidators = (listingMinimumPriceSubUnits, marketplaceCurrency, in
   const priceRequiredMsg = intl.formatMessage(priceRequiredMsgId);
   const priceRequired = validators.required(priceRequiredMsg);
 
-  console.log("listingMinimumPriceSubUnits", listingMinimumPriceSubUnits)
-  console.log("marketplaceCurrency", marketplaceCurrency)
-
   const minPriceRaw = new Money(listingMinimumPriceSubUnits, marketplaceCurrency);
 
   const minPrice = formatMoney(intl, minPriceRaw);

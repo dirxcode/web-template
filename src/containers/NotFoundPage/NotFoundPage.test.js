@@ -28,7 +28,7 @@ describe('NotFoundPage', () => {
     render(
       <NotFoundPageComponent
         scrollingDisabled={false}
-        marketplaceName="My Marketplace"
+        marketplaceName="Lendit"
         isKeywordSearch={true}
         intl={fakeIntl}
         routeConfiguration={routeConfiguration}

@@ -89,19 +89,21 @@ const SectionBuilder = props => {
           section?.appearance?.textColor === 'white';
         const classes = classNames({ [css.darkTheme]: isDarkTheme });
         const sectionId = getUniqueSectionId(section.sectionId, index);
-
+          
         if (Section) {
-          return (
-            <Section
-              key={`${sectionId}_i${index}`}
-              className={classes}
-              defaultClasses={DEFAULT_CLASSES}
-              isInsideContainer={isInsideContainer}
-              options={otherOption}
-              {...section}
-              sectionId={sectionId}
-            />
-          );
+            return (
+              <Section
+                key={`${sectionId}_i${index}`}
+                className={classes}
+                defaultClasses={DEFAULT_CLASSES}
+                isInsideContainer={isInsideContainer}
+                options={otherOption}
+                {...section}
+                sectionId={sectionId}
+              />
+            );
+          
+          
         } else {
           // If the section type is unknown, the app can't know what to render
           console.warn(
