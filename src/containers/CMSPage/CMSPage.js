@@ -64,17 +64,6 @@ export const CMSPageComponent = props => {
       }
     />
   );
-
-  // if(customPageData){
-    
-  // }else{
-  // return (
-  //   <PageBuilder
-  //     pageAssetsData={pageAssetsData?.[pageId]?.data}
-  //     inProgress={inProgress}
-  //     schemaType="Article"
-  //   />
-  // );}
 };
 
 CMSPageComponent.propTypes = {

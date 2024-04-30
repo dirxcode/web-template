@@ -16,10 +16,9 @@ const getColumnCSS = numColumns => {
 };
 
 const tabs = [
-    { label: 'Lender', content: <div>Content for Tab 1</div>, data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"List your items", content:"<p>Take a picture of idle items lying around, set your price and terms.<br><br>Free to list!</p>"},{label:"Accept offers", content:"<p>Check your inbox to see if you’ve received rental requests. If it works, click accept!<br><br>Schedule a time or delivery method between you and the renter that’s convenient.</p>"},{label:"Get Paid!", content:"<p>Payment will be made to your account anywhere between 5-14 business days (there maybe additional delays depending on your bank’s processing time)<br><br>Keep an eye on your account!</p>"}] },
-    { label: 'Renter', content: <div>Content for Tab 2</div>,data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"Find an item nearby", content:"<p>Search for the items you’re looking for and filter by type.</p>"},{label:"Request and book", content:"<p>Send a request to the lender for the dates you’d like the items. When they accept your request, you’re ready to book by the items by paying.</p>"},{label:"Collect and enjoy!", content:"<p>Set a delivery method between you and the Lender.<br><br>Enjoy and treat these precious items as if they were yours!<br><br>Return your items before the due date to avoid penalties!</p>"},] },
+    { label: 'Lender', content: <div>Content for Tab 1</div>, data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"List your items", content:"<p>Take a picture of idle items lying around, set your price and terms.<br><br>It's free to list!</p>"},{label:"Accept offers", content:"<p>Check your inbox to see if you’ve received rental requests. If it works, click accept! <br><br> Schedule a time or delivery method between you and the renter that’s convenient.</p>"},{label:"Get Paid!", content:"<p>Payment will be made to your account anywhere between 5-14 business days (there maybe additional delays depending on your bank’s processing time) <br><br> Keep an eye on your account!</p>"}] },
+    { label: 'Renter', content: <div>Content for Tab 2</div>,data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"Find an item nearby", content:"<p>Search for the items you’re looking for and filter by type.</p>"},{label:"Request and book", content:"<p>Send a request to the lender for the dates you’d like the items. When they accept your request, you’re ready to book by the items by paying.</p>"},{label:"Collect and enjoy!", content:"<p>Set a delivery method between you and the Lender. <br><br> Enjoy and treat these precious items as if they were yours! <br><br> Return your items before the due date to avoid penalties! </p>"},] },
 ];
-
 
 const SectionTabs = props => {
     const {
@@ -101,41 +100,35 @@ const SectionTabs = props => {
     return blocks;
   };
 
-    console.log("Css",css);
     return (
-        <SectionContainer
-          id={sectionId}
-          className={className}
-          rootClassName={css.root}
-          appearance={appearance}
-          options={fieldOptions}
-        >
-            <header className={defaultClasses.sectionDetails}>
-              <center>
-              <h2 className="Heading_h2__rNLtP SectionBuilder_title__fPMOM SectionBuilder_align__WNhQa">How it works</h2>
-              <p className='Ingress_ingress__gvK1A SectionBuilder_description__A7dhl SectionBuilder_align__WNhQa'>Access items without owning them by renting them from people in your neighborhood in a few easy steps</p>
-              </center>
-            </header>
-            <div className='SectionTabs_mBottom__VgE1o'></div>
-            <div className="SectionTabs_Tabs__G9avD">
-                <ul className="SectionTabs_nav__QMNQ4">
-                    {/* Map over tabs and render them */}
-                    {tabs.map((tab, index) => (
-                        <li 
-                            key={index} 
-                            onClick={() => handleTabClick(index)}
-                            className={index === activeTab ? 'SectionTabs_active__Ymnp8' : ''}
-                        >
-                          <div className='SectionTabs_txtLabel__uw6c7'> {tab.label}</div>
-                        </li>
-                    ))}
-                </ul>
-                {/* Render content based on active tab */}
-                <div className="SectionTabs_outlet__ggIfZ">
-                    {renderDataColumns(tabs[activeTab].data)}
-                </div>
-            </div>
-        </SectionContainer>
+        <>
+          <div className='SectionTabs_mBottom__VgE1o'></div>
+          <header className={defaultClasses.sectionDetails}>
+            <center>
+            <h2 className="Heading_h2__rNLtP SectionBuilder_title__fPMOM SectionBuilder_align__WNhQa">How it works</h2>
+            <p className='Ingress_ingress__gvK1A SectionBuilder_description__A7dhl SectionBuilder_align__WNhQa'>Access items without owning them by renting them from people in your neighborhood in a few easy steps</p>
+            </center>
+          </header>
+          <div className='SectionTabs_mBottom__VgE1o'></div>
+          <div className="SectionTabs_Tabs__G9avD" style={{ background: 'white', width: '100%' }}>
+              <ul className="SectionTabs_nav__QMNQ4">
+                  {/* Map over tabs and render them */}
+                  {tabs.map((tab, index) => (
+                      <li 
+                          key={index} 
+                          onClick={() => handleTabClick(index)}
+                          className={index === activeTab ? 'SectionTabs_active__Ymnp8' : ''}
+                      >
+                        <div className='SectionTabs_txtLabel__uw6c7'> {tab.label}</div>
+                      </li>
+                  ))}
+              </ul>
+              {/* Render content based on active tab */}
+              <div className="SectionTabs_outlet__ggIfZ">
+                  {renderDataColumns(tabs[activeTab].data)}
+              </div>
+          </div>
+        </>
       );
 };
 

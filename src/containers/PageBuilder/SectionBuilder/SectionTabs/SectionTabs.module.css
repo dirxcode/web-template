@@ -1,14 +1,6 @@
 @import '../../../../styles/customMediaQueries.css';
 
 .root {
-    padding-left: 60px;
-    padding-right: 60px;
-}
-@media screen and (max-width: 768px) {
-    .root {
-        padding-left: 40px;
-        padding-right: 40px;
-    }
 }
 
 @media screen and (max-width: 480px) {
@@ -20,6 +12,10 @@
 
 .mBottom{
     margin-bottom: 120px;
+}
+
+.bgWhite{
+    background-color: white;
 }
 
 .txtLabel{
@@ -42,6 +38,7 @@
 .Tabs {
     display: flex;
     flex-direction: column;
+    padding: 60px 40px 60px 40px;
 }
 
 .Tabs .nav {
