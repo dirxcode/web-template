@@ -5,8 +5,9 @@ import classNames from 'classnames';
 import Field, { hasDataInFields } from '../../Field';
 import SectionContainer from '../SectionContainer';
 import css from './SectionTabs.module.css';
+import Button, { PrimaryButton, SecondaryButton, InlineTextButton } from '../../../../components/Button/Button';
 
-console.log("css.txtTabs",css.txtTabs);
+// console.log("css.txtTabs",css.txtTabs);
 const getIndex = numColumns => numColumns - 1;
 const getColumnCSS = numColumns => {
   const config = COLUMN_CONFIG[getIndex(numColumns)];
@@ -14,7 +15,7 @@ const getColumnCSS = numColumns => {
 };
 
 const tabs = [
-    { label: 'Lender', content: <div>Content for Tab 1</div>, data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"List your items", content:"Take a picture of idle items lying around, set your price and terms\nfree to list!"},{label:"Accept offers", content:"Check your inbox to see if you’ve received rental requests.\nIf it works, click accept! Schedule a time or delivery method between you and the renter that’s convenient."},{label:"Get Paid!", content:"Payment will be made to your account anywhere between 5-14 business days (there maybe additional delays depending on your bank’s processing time)\nKeep an eye on your account!"}] },
+    { label: 'Lender', content: <div>Content for Tab 1</div>, data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"List your items", content:"Take a picture of idle items lying around, set your price and terms free to list!"},{label:"Accept offers", content:"Check your inbox to see if you’ve received rental requests.\nIf it works, click accept! Schedule a time or delivery method between you and the renter that’s convenient."},{label:"Get Paid!", content:"Payment will be made to your account anywhere between 5-14 business days (there maybe additional delays depending on your bank’s processing time)\nKeep an eye on your account!"}] },
     { label: 'Renter', content: <div>Content for Tab 2</div>,data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"Find an item nearby", content:"Search for the items you’re looking for and filter by type"},{label:"Request and book", content:"Send a request to the lender for the dates you’d like the items. When they accept your request, you’re ready to book by the items by paying"},{label:"Collect and enjoy!", content:"Set a delivery method between you and the Lender. Enjoy and treat these precious items as if they were yours! Return your items before the due date to avoid penalties!"},] },
 ];
 
@@ -44,6 +45,10 @@ const SectionTabs = props => {
         setActiveTab(index);
     };
 
+    const goToSignUp = () => {
+      window.location.href = '/signup';
+  };
+
     // If external mapping has been included for fields
     // E.g. { h1: { component: MyAwesomeHeader } }
     const fieldComponents = options?.fieldComponents;
@@ -60,20 +65,42 @@ const SectionTabs = props => {
           columns[columnIndex].push(item);
       });
 
-      // Render each column
-      return columns.map((column, index) => (
+      let blocks = columns.map((column, index) => {
+        if(index==0){
+          return (
+            <div key={index} className="SectionTabs_column__3S5Qy">
+                {column.map(({ label, content }) => (
+                    <div key={label}>
+                        <div className='SectionTabs_txtLabel__uw6c7'>{label}</div>
+                        <p>{content}</p>
+                        <div className='SectionTabs_btnStart__7odMI'>
+                            <SecondaryButton onClick={goToSignUp}>
+                              <span>Get Started</span>
+                            </SecondaryButton>
+                        </div>
+                    </div>
+                ))}
+            </div>
+         );
+        }else{
+        return (
           <div key={index} className="SectionTabs_column__3S5Qy">
               {column.map(({ label, content }) => (
                   <div key={label}>
-                      <h4>{label}</h4>
+                      <div className='SectionTabs_txtLabel__uw6c7'>{label}</div>
                       <p>{content}</p>
                   </div>
               ))}
           </div>
-      ));
+       );
+      }
+      });
+      
+
+    return blocks;
   };
 
-    console.log("Css",css);
+    // console.log("Css",css);
     return (
         <SectionContainer
           id={sectionId}
@@ -91,7 +118,7 @@ const SectionTabs = props => {
                             onClick={() => handleTabClick(index)}
                             className={index === activeTab ? 'SectionTabs_active__Ymnp8' : ''}
                         >
-                            {tab.label}
+                          <div className='SectionTabs_txtLabel__uw6c7'> {tab.label}</div>
                         </li>
                     ))}
                 </ul>

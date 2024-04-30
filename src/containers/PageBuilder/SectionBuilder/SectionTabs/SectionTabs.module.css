@@ -6,6 +6,33 @@
     padding-right: 60px;
 }
 
+.txtLabel{
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.btnStart{
+    width: 120px;
+}
+
+.link-class {
+    text-decoration: none;
+}
+/* 
+@media screen and (max-width: 768px) {
+    .txtLabel {
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+}*/
+  
+/* @media screen and (max-width: 480px) {
+    .btnStart{
+        width: 120px;
+        margin-left: 0px;
+    }
+}  */
+
   
 .txtTab{
     background-color: aliceblue;
@@ -36,15 +63,15 @@
 }
 
 .Tabs .outlet {
-/* border: 1px solid #ccc;
-padding: 10px; */
-display: flex;
-justify-content: space-around;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .Tabs .column {
     flex: 1;
-    padding: 60px 10px; /* Adjust spacing between columns */
+    padding: 40px 10px 20px 10px;
+    min-width: 200px;
 }
   
 .Tabs .column > div {
