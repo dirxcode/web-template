@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Field, { hasDataInFields } from '../../Field';
 import SectionContainer from '../SectionContainer';
 import css from './SectionTabs.module.css';
-import Button, { PrimaryButton, SecondaryButton, InlineTextButton } from '../../../../components/Button/Button';
+import { SecondaryButton } from '../../../../components/Button/Button';
 
 // console.log("css.txtTabs",css.txtTabs);
 const getIndex = numColumns => numColumns - 1;
@@ -15,8 +15,8 @@ const getColumnCSS = numColumns => {
 };
 
 const tabs = [
-    { label: 'Lender', content: <div>Content for Tab 1</div>, data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"List your items", content:"Take a picture of idle items lying around, set your price and terms free to list!"},{label:"Accept offers", content:"Check your inbox to see if you’ve received rental requests.\nIf it works, click accept! Schedule a time or delivery method between you and the renter that’s convenient."},{label:"Get Paid!", content:"Payment will be made to your account anywhere between 5-14 business days (there maybe additional delays depending on your bank’s processing time)\nKeep an eye on your account!"}] },
-    { label: 'Renter', content: <div>Content for Tab 2</div>,data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"Find an item nearby", content:"Search for the items you’re looking for and filter by type"},{label:"Request and book", content:"Send a request to the lender for the dates you’d like the items. When they accept your request, you’re ready to book by the items by paying"},{label:"Collect and enjoy!", content:"Set a delivery method between you and the Lender. Enjoy and treat these precious items as if they were yours! Return your items before the due date to avoid penalties!"},] },
+    { label: 'Lender', content: <div>Content for Tab 1</div>, data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"List your items", content:"<p>Take a picture of idle items lying around, set your price and terms.<br><br>Free to list!</p>"},{label:"Accept offers", content:"<p>Check your inbox to see if you’ve received rental requests. If it works, click accept!<br><br>Schedule a time or delivery method between you and the renter that’s convenient.</p>"},{label:"Get Paid!", content:"<p>Payment will be made to your account anywhere between 5-14 business days (there maybe additional delays depending on your bank’s processing time)<br><br>Keep an eye on your account!</p>"}] },
+    { label: 'Renter', content: <div>Content for Tab 2</div>,data:[{label:"Sign up", content:"Signing up and getting verified on Lendit takes a couple of minutes."},{label:"Find an item nearby", content:"<p>Search for the items you’re looking for and filter by type.</p>"},{label:"Request and book", content:"<p>Send a request to the lender for the dates you’d like the items. When they accept your request, you’re ready to book by the items by paying.</p>"},{label:"Collect and enjoy!", content:"<p>Set a delivery method between you and the Lender.<br><br>Enjoy and treat these precious items as if they were yours!<br><br>Return your items before the due date to avoid penalties!</p>"},] },
 ];
 
 
@@ -88,7 +88,7 @@ const SectionTabs = props => {
               {column.map(({ label, content }) => (
                   <div key={label}>
                       <div className='SectionTabs_txtLabel__uw6c7'>{label}</div>
-                      <p>{content}</p>
+                      <div dangerouslySetInnerHTML={{ __html: content }} />
                   </div>
               ))}
           </div>
