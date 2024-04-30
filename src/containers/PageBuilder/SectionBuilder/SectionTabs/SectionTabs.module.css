@@ -1,9 +1,25 @@
 @import '../../../../styles/customMediaQueries.css';
 
 .root {
-    background-color: white;
     padding-left: 60px;
     padding-right: 60px;
+}
+@media screen and (max-width: 768px) {
+    .root {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .root {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+} 
+
+.mBottom{
+    margin-bottom: 120px;
 }
 
 .txtLabel{
@@ -18,22 +34,7 @@
 .link-class {
     text-decoration: none;
 }
-/* 
-@media screen and (max-width: 768px) {
-    .txtLabel {
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-}*/
-  
-/* @media screen and (max-width: 480px) {
-    .btnStart{
-        width: 120px;
-        margin-left: 0px;
-    }
-}  */
 
-  
 .txtTab{
     background-color: aliceblue;
 }

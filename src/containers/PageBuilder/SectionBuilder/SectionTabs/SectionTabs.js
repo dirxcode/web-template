@@ -6,6 +6,7 @@ import Field, { hasDataInFields } from '../../Field';
 import SectionContainer from '../SectionContainer';
 import css from './SectionTabs.module.css';
 import { SecondaryButton } from '../../../../components/Button/Button';
+import { H2, H4 } from '../../../../components';
 
 // console.log("css.txtTabs",css.txtTabs);
 const getIndex = numColumns => numColumns - 1;
@@ -100,7 +101,7 @@ const SectionTabs = props => {
     return blocks;
   };
 
-    // console.log("Css",css);
+    console.log("Css",css);
     return (
         <SectionContainer
           id={sectionId}
@@ -109,6 +110,13 @@ const SectionTabs = props => {
           appearance={appearance}
           options={fieldOptions}
         >
+            <header className={defaultClasses.sectionDetails}>
+              <center>
+              <h2 className="Heading_h2__rNLtP SectionBuilder_title__fPMOM SectionBuilder_align__WNhQa">How it works</h2>
+              <p className='Ingress_ingress__gvK1A SectionBuilder_description__A7dhl SectionBuilder_align__WNhQa'>Access items without owning them by renting them from people in your neighborhood in a few easy steps</p>
+              </center>
+            </header>
+            <div className='SectionTabs_mBottom__VgE1o'></div>
             <div className="SectionTabs_Tabs__G9avD">
                 <ul className="SectionTabs_nav__QMNQ4">
                     {/* Map over tabs and render them */}
