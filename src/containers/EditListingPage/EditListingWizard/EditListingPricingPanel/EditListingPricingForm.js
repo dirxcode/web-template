@@ -77,6 +77,8 @@ export const EditListingPricingFormComponent = props => (
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
 
+      console.log("FinalForm unitType",unitType);
+
       return (
         <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
@@ -94,10 +96,11 @@ export const EditListingPricingFormComponent = props => (
             name="price"
             className={css.input}
             autoFocus={autoFocus}
-            label={intl.formatMessage(
-              { id: 'EditListingPricingForm.pricePerProduct' },
-              { unitType }
-            )}
+            // label={intl.formatMessage(
+            //   { id: 'EditListingPricingForm.pricePerProduct' },
+            //   { unitType }
+            // )}
+            label={"Price per "+unitType}
             placeholder={intl.formatMessage({ id: 'EditListingPricingForm.priceInputPlaceholder' })}
             currencyConfig={appSettings.getCurrencyFormatting(marketplaceCurrency)}
             validate={priceValidators}

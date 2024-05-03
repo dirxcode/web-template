@@ -1,21 +1,28 @@
 import React from 'react';
 import { FormattedMessage, intlShape } from '../../util/reactIntl';
 import { formatMoney } from '../../util/currency';
-import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes, LINE_ITEM_HOUR } from '../../util/types';
+import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes, LINE_ITEM_HOUR, LINE_ITEM_MONTH, LINE_ITEM_WEEK } from '../../util/types';
 
 import css from './OrderBreakdown.module.css';
 
 const LineItemBasePriceMaybe = props => {
   const { lineItems, code, intl } = props;
+
   const isNightly = code === LINE_ITEM_NIGHT;
   const isDaily = code === LINE_ITEM_DAY;
   const isHourly = code === LINE_ITEM_HOUR;
+  const isWeek = code === LINE_ITEM_WEEK;
+  const isMonth = code === LINE_ITEM_MONTH;
   const translationKey = isNightly
     ? 'OrderBreakdown.baseUnitNight'
     : isDaily
     ? 'OrderBreakdown.baseUnitDay'
     : isHourly
     ? 'OrderBreakdown.baseUnitHour'
+    : isWeek
+    ? 'OrderBreakdown.baseRentWeek'
+    : isMonth
+    ? 'OrderBreakdown.baseRentMonth'
     : 'OrderBreakdown.baseUnitQuantity';
 
   // Find correct line-item for given code prop.

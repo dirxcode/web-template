@@ -257,6 +257,8 @@ const OrderPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.orderTitle);
 
+  const rentalData = listing?.attributes?.publicData.rentalData;
+
   return (
     <div className={classes}>
       <ModalInMobile
@@ -342,6 +344,7 @@ const OrderPanel = props => {
             fetchLineItemsInProgress={fetchLineItemsInProgress}
             fetchLineItemsError={fetchLineItemsError}
             payoutDetailsWarning={payoutDetailsWarning}
+            rentalData={rentalData}
           />
         ) : showProductOrderForm ? (
           <ProductOrderForm

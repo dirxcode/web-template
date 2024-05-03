@@ -87,6 +87,31 @@ const getDateRangeQuantityAndLineItems = (orderData, code) => {
   return { quantity, extraLineItems: [] };
 };
 
+
+const getMonthRentQuantity = (totalDays, unitPrice) => {
+  const rate = unitPrice.amount;
+  const currency = unitPrice.currency;
+
+
+  const quantityMonths = Math.floor(totalDays / 30);
+  const extraDays = totalDays % 30;
+  const dailyRateFromMonthly = rate / 30;
+
+  return {quantityMonths, dailyRateFromMonthly, extraDays}
+}
+
+const getWeeklyRentQuantity = (totalDays, unitPrice) => {
+  const rate = unitPrice.amount;
+
+  const quantityWeeks = Math.floor(totalDays / 7);
+  const extraDays = totalDays % 7;
+  const dailyRateFromWeekly = rate / 7;
+
+  return {quantityWeeks, dailyRateFromWeekly, extraDays}
+}
+
+
+
 /**
  * Returns collection of lineItems (max 50)
  *
@@ -169,12 +194,60 @@ exports.transactionLineItems = (listing, orderData, providerCommission, customer
    *
    * By default OrderBreakdown prints line items inside LineItemUnknownItemsMaybe if the lineItem code is not recognized. */
 
-  const order = {
+  let order = {
     code,
     unitPrice,
     quantity,
     includeFor: ['customer', 'provider'],
   };
+  let insuranceFeeLineItem=[];
+
+  const userListingType = listing?.attributes?.publicData?.listingType || "";
+
+  if(userListingType == "weekly-rental"){
+    const {quantityWeeks, dailyRateFromWeekly, extraDays} = getWeeklyRentQuantity(quantity, unitPrice);
+    if(quantityWeeks > 0){
+      order = {
+        code: `line-item/week`,
+        unitPrice,
+        quantity: quantityWeeks,
+        includeFor: ['customer', 'provider'],
+      }
+
+      if(extraDays > 0){
+        insuranceFeeLineItem = [
+          {
+            code: 'line-item/extra-days-fee',
+              unitPrice: new Money(dailyRateFromWeekly, currency),
+              quantity: extraDays,
+              includeFor: ['customer', 'provider'],
+          },
+        ];
+      }
+    }
+  }else if(userListingType == "monthly-rental"){
+    const {quantityMonths, dailyRateFromMonthly, extraDays} = getMonthRentQuantity(quantity, unitPrice);
+    if(quantityMonths > 0){ 
+      order = {
+        code: `line-item/month`,
+        unitPrice,
+        quantity: quantityMonths,
+        includeFor: ['customer', 'provider'],
+      };
+
+      if(extraDays > 0){
+        insuranceFeeLineItem = [
+          {
+            code: 'line-item/extra-days-fee',
+              unitPrice: new Money(dailyRateFromMonthly, currency),
+              quantity: extraDays,
+              includeFor: ['customer', 'provider'],
+          },
+        ];
+      }
+    }
+  }
+
 
   // Provider commission reduces the amount of money that is paid out to provider.
   // Therefore, the provider commission line-item should have negative effect to the payout total.
@@ -192,7 +265,7 @@ exports.transactionLineItems = (listing, orderData, providerCommission, customer
     ? [
         {
           code: 'line-item/provider-commission',
-          unitPrice: calculateTotalFromLineItems([order]),
+          unitPrice: calculateTotalFromLineItems([order,...insuranceFeeLineItem]),
           percentage: getNegation(providerCommission.percentage),
           includeFor: ['provider'],
         },
@@ -218,6 +291,7 @@ exports.transactionLineItems = (listing, orderData, providerCommission, customer
   const lineItems = [
     order,
     ...extraLineItems,
+    ...insuranceFeeLineItem,
     ...providerCommissionMaybe,
     ...customerCommissionMaybe,
   ];

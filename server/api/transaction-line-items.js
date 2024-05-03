@@ -12,7 +12,9 @@ module.exports = (req, res) => {
 
   Promise.all([listingPromise(), fetchCommission(sdk)])
     .then(([showListingResponse, fetchAssetsResponse]) => {
+      
       const listing = showListingResponse.data.data;
+      console.log("api/transaction-line-items")
       const commissionAsset = fetchAssetsResponse.data.data[0];
 
       const { providerCommission, customerCommission } =

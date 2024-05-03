@@ -377,6 +377,9 @@ export const LINE_ITEM_NIGHT = 'line-item/night';
 export const LINE_ITEM_DAY = 'line-item/day';
 export const LINE_ITEM_HOUR = 'line-item/hour';
 export const LINE_ITEM_ITEM = 'line-item/item';
+export const LINE_ITEM_WEEK = 'line-item/week';
+export const LINE_ITEM_MONTH = 'line-item/month';
+export const LINE_ITEM_EXTRA_DAYS_FEE = 'line-item/extra-days-fee';
 export const LINE_ITEM_CUSTOMER_COMMISSION = 'line-item/customer-commission';
 export const LINE_ITEM_PROVIDER_COMMISSION = 'line-item/provider-commission';
 export const LINE_ITEM_SHIPPING_FEE = 'line-item/shipping-fee';
@@ -387,12 +390,15 @@ export const LINE_ITEMS = [
   LINE_ITEM_DAY,
   LINE_ITEM_HOUR,
   LINE_ITEM_ITEM,
+  LINE_ITEM_WEEK,
+  LINE_ITEM_MONTH,
+  LINE_ITEM_EXTRA_DAYS_FEE,
   LINE_ITEM_CUSTOMER_COMMISSION,
   LINE_ITEM_PROVIDER_COMMISSION,
   LINE_ITEM_SHIPPING_FEE,
   LINE_ITEM_PICKUP_FEE,
 ];
-export const LISTING_UNIT_TYPES = [LINE_ITEM_NIGHT, LINE_ITEM_DAY, LINE_ITEM_HOUR, LINE_ITEM_ITEM];
+export const LISTING_UNIT_TYPES = [LINE_ITEM_NIGHT, LINE_ITEM_DAY, LINE_ITEM_HOUR, LINE_ITEM_ITEM, LINE_ITEM_WEEK,LINE_ITEM_MONTH, LINE_ITEM_EXTRA_DAYS_FEE];
 
 propTypes.lineItemUnitType = oneOf(LISTING_UNIT_TYPES);
 
