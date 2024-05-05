@@ -125,11 +125,15 @@ const PriceMaybe = props => {
   } = props;
   const { listingType, unitType } = publicData || {};
 
+  console.log(listingType);
+
   const foundListingTypeConfig = validListingTypes.find(conf => conf.listingType === listingType);
   const showPrice = displayPrice(foundListingTypeConfig);
   if (!showPrice || !price) {
     return null;
   }
+
+  const customListingType = listingType.replace('-rental','');
 
   // Get formatted price or currency code if the currency does not match with marketplace currency
   const { formattedPrice, priceTitle } = priceData(price, marketplaceCurrency, intl);
@@ -141,14 +145,16 @@ const PriceMaybe = props => {
         {formattedPrice}
       </div>
       <div className={css.perUnitInCTA}>
-        <FormattedMessage id="OrderPanel.perUnit" values={{ unitType }} />
+        {/* <FormattedMessage id="OrderPanel.perUnit" values={{ unitType }} /> */}
+        <FormattedMessage id="OrderPanel.perListingType" values={{ customListingType }} />
       </div>
     </div>
   ) : (
     <div className={css.priceContainer}>
       <p className={css.price}>{formatMoney(intl, price)}</p>
       <div className={css.perUnit}>
-        <FormattedMessage id="OrderPanel.perUnit" values={{ unitType }} />
+        {/* <FormattedMessage id="OrderPanel.perUnit" values={{ unitType }} /> */}
+        <FormattedMessage id="OrderPanel.perListingType" values={{ customListingType }} />
       </div>
     </div>
   );
