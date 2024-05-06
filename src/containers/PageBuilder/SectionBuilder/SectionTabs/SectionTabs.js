@@ -8,7 +8,6 @@ import css from './SectionTabs.module.css';
 import { SecondaryButton } from '../../../../components/Button/Button';
 import { H2, H4 } from '../../../../components';
 
-// console.log("css.txtTabs",css.txtTabs);
 const getIndex = numColumns => numColumns - 1;
 const getColumnCSS = numColumns => {
   const config = COLUMN_CONFIG[getIndex(numColumns)];

@@ -29,8 +29,6 @@ const getPriceValidators = (listingMinimumPriceSubUnits, marketplaceCurrency, in
   const minPriceRaw = new Money(listingMinimumPriceSubUnits, marketplaceCurrency);
 
   const minPrice = formatMoney(intl, minPriceRaw);
-
-  console.log("minPrice",minPrice);
   
   const priceTooLowMsgId = { id: 'EditListingPricingForm.priceTooLow' };
   const priceTooLowMsg = intl.formatMessage(priceTooLowMsgId, { minPrice });

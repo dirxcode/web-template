@@ -159,8 +159,6 @@ const EditListingWizardTab = props => {
   const panelProps = tab => {
     const userListingType = listing?.attributes?.publicData?.listingType || "";
 
-    console.log(listing?.attributes?.publicData);
-
     return {
       className: css.panel,
       errors,

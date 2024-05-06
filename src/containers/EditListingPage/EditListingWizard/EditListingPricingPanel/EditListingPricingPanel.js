@@ -18,18 +18,9 @@ const { Money } = sdkTypes;
 
 const getInitialValues = params => {
   const { listing } = params;
-  const { price, publicData } = listing?.attributes || {};
+  const { price } = listing?.attributes || {};
 
-  const listingType = listing?.attributes?.publicData?.listingType || "";
-
-  let unitType = "day";
-  if(listingType == "weekly-rental"){
-    unitType = "week";
-  }if(listingType == "monthly-rental"){
-    unitType = "month";
-  }
-
-  return { price, rentalData: { unit: unitType, rate: price}};
+  return { price };
 };
 
 const EditListingPricingPanel = props => {
@@ -50,15 +41,12 @@ const EditListingPricingPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const initialValues = getInitialValues(props);
-
   const isPublished = listing?.id && listing?.attributes?.state !== LISTING_STATE_DRAFT;
   const priceCurrencyValid =
     marketplaceCurrency && initialValues.price instanceof Money
       ? initialValues.price.currency === marketplaceCurrency
       : !!marketplaceCurrency;
-      
-  // const unitType = listing?.attributes?.publicData?.unitType;
-  const unitType = initialValues.rentalData.unit;
+  const unitType = listing?.attributes?.publicData?.unitType;
 
   return (
     <div className={classes}>
@@ -80,14 +68,11 @@ const EditListingPricingPanel = props => {
           className={css.form}
           initialValues={initialValues}
           onSubmit={values => {
-            const { price, rentalData = null } = values;
+            const { price } = values;
 
             // New values for listing attributes
             const updateValues = {
               price,
-              publicData: {
-                rentalData: rentalData ? { unit: rentalData.unit, rate: price} : null,
-              },
             };
             onSubmit(updateValues);
           }}

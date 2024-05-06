@@ -369,8 +369,7 @@ const handleFormSpyChange = (
   listingId,
   isOwnListing,
   fetchLineItemsInProgress,
-  onFetchTransactionLineItems,
-  rentalData
+  onFetchTransactionLineItems
 ) => formValues => {
   const { startDate, endDate } =
     formValues.values && formValues.values.bookingDates ? formValues.values.bookingDates : {};
@@ -380,7 +379,6 @@ const handleFormSpyChange = (
       orderData: {
         bookingStart: startDate,
         bookingEnd: endDate,
-        rentalData,
       },
       listingId,
       isOwnListing,
@@ -444,16 +442,13 @@ export const BookingDatesFormComponent = props => {
   } = props;
   const classes = classNames(rootClassName || css.root, className);
 
-  const rentalData = rest.rentalData;
-
   const onFormSubmit = handleFormSubmit(setFocusedInput, onSubmit);
   const onFocusedInputChange = handleFocusedInputChange(setFocusedInput);
   const onFormSpyChange = handleFormSpyChange(
     listingId,
     isOwnListing,
     fetchLineItemsInProgress,
-    onFetchTransactionLineItems,
-    rentalData,
+    onFetchTransactionLineItems
   );
   return (
     <FinalForm
@@ -473,7 +468,6 @@ export const BookingDatesFormComponent = props => {
           lineItems,
           fetchLineItemsError,
           onFetchTimeSlots,
-          rentalData,
         } = fieldRenderProps;
         const { startDate, endDate } = values && values.bookingDates ? values.bookingDates : {};
 

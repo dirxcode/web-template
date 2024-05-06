@@ -103,7 +103,6 @@ const createAvailabilityPlan = values => ({
 //////////////////////////////////
 const EditListingAvailabilityPanel = props => {
   const {
-    userListingType,
     className,
     rootClassName,
     params,
@@ -160,13 +159,10 @@ const EditListingAvailabilityPanel = props => {
   const handleSubmit = values => {
     setValuesFromLastSubmit(values);
 
-    console.log("setValuesFromLastSubmit", values, userListingType);
-
     // Final Form can wait for Promises to return.
     return onSubmit(createAvailabilityPlan(values))
       .then(() => {
-        throw new Error("Availability plan creation failed!");
-        // setIsEditPlanModalOpen(false);
+        setIsEditPlanModalOpen(false);
       })
       .catch(e => {
         // Don't close modal if there was an error
