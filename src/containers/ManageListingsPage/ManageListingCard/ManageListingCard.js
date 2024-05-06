@@ -316,6 +316,8 @@ const PriceMaybe = props => {
     return null;
   }
 
+  const customListingType = listingType.replace('-rental','');
+
   const isBookable = isBookingProcessAlias(publicData?.transactionProcessAlias);
   const { formattedPrice, priceTitle } = priceData(price, config.currency, intl);
   return (
@@ -325,9 +327,13 @@ const PriceMaybe = props => {
       </div>
       {isBookable ? (
         <div className={css.perUnit}>
-          <FormattedMessage
+          {/* <FormattedMessage
             id="ManageListingCard.perUnit"
             values={{ unitType: publicData?.unitType }}
+          /> */}
+          <FormattedMessage
+            id="ManageListingCard.perListingType"
+            values={{ customListingType }}
           />
         </div>
       ) : null}

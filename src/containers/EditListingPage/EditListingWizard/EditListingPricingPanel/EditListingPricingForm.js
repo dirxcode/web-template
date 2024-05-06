@@ -29,6 +29,8 @@ const getPriceValidators = (listingMinimumPriceSubUnits, marketplaceCurrency, in
   const minPriceRaw = new Money(listingMinimumPriceSubUnits, marketplaceCurrency);
 
   const minPrice = formatMoney(intl, minPriceRaw);
+
+  console.log("minPrice",minPrice);
   
   const priceTooLowMsgId = { id: 'EditListingPricingForm.priceTooLow' };
   const priceTooLowMsg = intl.formatMessage(priceTooLowMsgId, { minPrice });
@@ -36,6 +38,10 @@ const getPriceValidators = (listingMinimumPriceSubUnits, marketplaceCurrency, in
     priceTooLowMsg,
     listingMinimumPriceSubUnits
   );
+
+  console.log(
+    "listingMinimumPriceSubUnits",listingMinimumPriceSubUnits
+  )
 
   return listingMinimumPriceSubUnits
     ? validators.composeValidators(priceRequired, minPriceRequired)
@@ -77,8 +83,6 @@ export const EditListingPricingFormComponent = props => (
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
 
-      console.log("FinalForm unitType",unitType);
-
       return (
         <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
@@ -100,7 +104,7 @@ export const EditListingPricingFormComponent = props => (
             //   { id: 'EditListingPricingForm.pricePerProduct' },
             //   { unitType }
             // )}
-            label={"Price per "+unitType}
+            // label={"Price per "+unitType}
             placeholder={intl.formatMessage({ id: 'EditListingPricingForm.priceInputPlaceholder' })}
             currencyConfig={appSettings.getCurrencyFormatting(marketplaceCurrency)}
             validate={priceValidators}
