@@ -34,6 +34,8 @@ const DetailsSideCard = props => {
   const { price, publicData } = listing?.attributes || {};
   const unitType = publicData.unitType || 'unknown';
 
+  const customListingType = publicData.listingType.replace('-rental','');
+
   const { aspectWidth = 1, aspectHeight = 1, variantPrefix = 'listing-card' } =
     layoutListingImageConfig || {};
   const variants = firstImage
@@ -71,8 +73,12 @@ const DetailsSideCard = props => {
             <div className={css.priceContainer}>
               <p className={css.price}>{formatMoney(intl, price)}</p>
               <div className={css.perUnit}>
-                <FormattedMessage
+                {/* <FormattedMessage
                   id="CheckoutPageWithInquiryProcess.perUnit"
+                  values={{ unitType }}
+                /> */}
+                <FormattedMessage
+                  id="CheckoutPageWithInquiryProcess.perListingType"
                   values={{ unitType }}
                 />
               </div>

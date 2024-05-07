@@ -87,6 +87,7 @@
   "CheckoutPageWithInquiryProcess.messagePlaceholder": "Hello there! I'm interested in…",
   "CheckoutPageWithInquiryProcess.messageRequired": "Message is required.",
   "CheckoutPageWithInquiryProcess.perUnit": "{unitType, select, day {per day} night {per night} hour {per hour} other {}}",
+  "CheckoutPageWithInquiryProcess.perListingType": "{customListingType, select, daily {per day} weekly {per week} monthly {per month} other {}}",
   "CheckoutPageWithInquiryProcess.submitButtonText": "Send inquiry",
   "ConfirmSignupForm.emailInvalid": "A valid email address is required.",
   "ConfirmSignupForm.emailLabel": "Email",

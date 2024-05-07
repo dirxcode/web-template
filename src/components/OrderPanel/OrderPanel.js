@@ -125,6 +125,8 @@ const PriceMaybe = props => {
   } = props;
   const { listingType, unitType } = publicData || {};
 
+  const customListingType = listingType.replace('-rental','');
+
   const foundListingTypeConfig = validListingTypes.find(conf => conf.listingType === listingType);
   const showPrice = displayPrice(foundListingTypeConfig);
   if (!showPrice || !price) {
@@ -141,14 +143,16 @@ const PriceMaybe = props => {
         {formattedPrice}
       </div>
       <div className={css.perUnitInCTA}>
-        <FormattedMessage id="OrderPanel.perUnit" values={{ unitType }} />
+        {/* <FormattedMessage id="OrderPanel.perUnit" values={{ unitType }} /> */}
+        <FormattedMessage id="OrderPanel.perListingType" values={{ customListingType }} />
       </div>
     </div>
   ) : (
     <div className={css.priceContainer}>
       <p className={css.price}>{formatMoney(intl, price)}</p>
       <div className={css.perUnit}>
-        <FormattedMessage id="OrderPanel.perUnit" values={{ unitType }} />
+        {/* <FormattedMessage id="OrderPanel.perUnit" values={{ unitType }} /> */}
+        <FormattedMessage id="OrderPanel.perListingType" values={{ customListingType }} />
       </div>
     </div>
   );
