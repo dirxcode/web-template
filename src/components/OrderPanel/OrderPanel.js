@@ -122,10 +122,9 @@ const PriceMaybe = props => {
     intl,
     marketplaceCurrency,
     showCurrencyMismatch = false,
+    customListingType,
   } = props;
   const { listingType, unitType } = publicData || {};
-
-  const customListingType = listingType.replace('-rental','');
 
   const foundListingTypeConfig = validListingTypes.find(conf => conf.listingType === listingType);
   const showPrice = displayPrice(foundListingTypeConfig);
@@ -193,6 +192,8 @@ const OrderPanel = props => {
   const { listingType, unitType, transactionProcessAlias = '' } = publicData || {};
   const processName = resolveLatestProcessName(transactionProcessAlias.split('/')[0]);
   const lineItemUnitType = lineItemUnitTypeMaybe || `line-item/${unitType}`;
+
+  const customListingType = listingType.replace('-rental','');
 
   const price = listing?.attributes?.price;
   const isPaymentProcess = processName !== INQUIRY_PROCESS_NAME;
@@ -287,6 +288,7 @@ const OrderPanel = props => {
           validListingTypes={validListingTypes}
           intl={intl}
           marketplaceCurrency={marketplaceCurrency}
+          customListingType={customListingType}
         />
 
         <div className={css.author}>
@@ -346,6 +348,8 @@ const OrderPanel = props => {
             fetchLineItemsInProgress={fetchLineItemsInProgress}
             fetchLineItemsError={fetchLineItemsError}
             payoutDetailsWarning={payoutDetailsWarning}
+            customListingType={customListingType}
+
           />
         ) : showProductOrderForm ? (
           <ProductOrderForm
@@ -383,6 +387,7 @@ const OrderPanel = props => {
           validListingTypes={validListingTypes}
           intl={intl}
           marketplaceCurrency={marketplaceCurrency}
+          customListingType={customListingType}
           showCurrencyMismatch
         />
 

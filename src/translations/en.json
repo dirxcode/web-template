@@ -46,6 +46,7 @@
   "BookingDatesForm.requiredDate": "Select an available date",
   "BookingDatesForm.timeSlotsError": "We encountered an error when loading the available dates. Please refresh the page. ",
   "BookingDatesForm.youWontBeChargedInfo": "You won't be charged yet",
+  "BookingDatesForm.minimumDaysInformation": "{customListingType, select, weekly {* Select booking dates for at least 7 days. The minimum selectable duration is one week} monthly {* Select booking dates for at least 30 days. The minimum selectable duration is one month} other {}}",
   "BookingTimeForm.bookingEndTitle": "End date",
   "BookingTimeForm.bookingStartTitle": "Pick a date",
   "BookingTimeForm.fetchLineItemsError": "Oops, something went wrong. Please refresh the page and try again.",

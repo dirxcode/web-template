@@ -224,7 +224,15 @@ exports.transactionLineItems = (listing, orderData, providerCommission, customer
           },
         ];
       }
+    }else{
+      order = {
+        code,
+        unitPrice: new Money(dailyRateFromWeekly, currency),
+        quantity,
+        includeFor: ['customer', 'provider'],
+      };
     }
+    
   }else if(userListingType == "monthly-rental"){
     const {quantityMonths, dailyRateFromMonthly, extraDays} = getMonthRentQuantity(quantity, unitPrice);
     if(quantityMonths > 0){ 
@@ -245,6 +253,13 @@ exports.transactionLineItems = (listing, orderData, providerCommission, customer
           },
         ];
       }
+    }else{
+      order = {
+        code,
+        unitPrice: new Money(dailyRateFromMonthly, currency),
+        quantity,
+        includeFor: ['customer', 'provider'],
+      };
     }
   }
 

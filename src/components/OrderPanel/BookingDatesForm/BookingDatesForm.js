@@ -343,6 +343,7 @@ const handleMonthClick = (
 // default handleSubmit function.
 const handleFormSubmit = (setFocusedInput, onSubmit) => e => {
   const { startDate, endDate } = e.bookingDates || {};
+
   if (!startDate) {
     e.preventDefault();
     setFocusedInput(START_DATE);
@@ -438,10 +439,11 @@ export const BookingDatesFormComponent = props => {
     dayCountAvailableForBooking,
     marketplaceName,
     payoutDetailsWarning,
+    customListingType,
     ...rest
   } = props;
   const classes = classNames(rootClassName || css.root, className);
-
+ 
   const onFormSubmit = handleFormSubmit(setFocusedInput, onSubmit);
   const onFocusedInputChange = handleFocusedInputChange(setFocusedInput);
   const onFormSpyChange = handleFormSpyChange(
@@ -532,7 +534,6 @@ export const BookingDatesFormComponent = props => {
           dayCountAvailableForBooking,
           timeZone
         );
-
         return (
           <Form onSubmit={handleSubmit} className={classes} enforcePagePreloadFor="CheckoutPage">
             <FormSpy subscription={{ values: true }} onChange={onFormSpyChange} />
@@ -609,7 +610,14 @@ export const BookingDatesFormComponent = props => {
               onClose={event =>
                 setCurrentMonth(getStartOf(event?.startDate ?? startOfToday, 'month', timeZone))
               }
+              customListingType={customListingType}
             />
+            {!showEstimatedBreakdown ? (
+              <i className={css.finePrint}>
+                  <FormattedMessage id="BookingDatesForm.minimumDaysInformation" values={{ customListingType }} />
+                </i>) :
+                null}
+            
 
             {showEstimatedBreakdown ? (
               <div className={css.priceBreakdownContainer}>
@@ -668,6 +676,7 @@ BookingDatesFormComponent.defaultProps = {
   lineItems: null,
   fetchLineItemsError: null,
   monthlyTimeSlots: null,
+  customListingType: null,
 };
 
 BookingDatesFormComponent.propTypes = {
@@ -693,6 +702,7 @@ BookingDatesFormComponent.propTypes = {
   startDatePlaceholder: string,
   endDatePlaceholder: string,
   dayCountAvailableForBooking: number.isRequired,
+  customListingType: string,
 };
 
 const BookingDatesForm = compose(injectIntl)(BookingDatesFormComponent);

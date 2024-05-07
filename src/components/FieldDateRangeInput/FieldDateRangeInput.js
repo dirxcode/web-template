@@ -70,6 +70,7 @@ class FieldDateRangeInputComponent extends Component {
       // the same values will not be passed on to subcomponents.
       focusedInput,
       onFocusedInputChange,
+      customListingType,
       ...rest
     } = this.props;
     /* eslint-disable no-unused-vars */
@@ -100,11 +101,21 @@ class FieldDateRangeInputComponent extends Component {
         </div>
       ) : null;
 
+
+    let costumMinimumNight= 0;
+    if(customListingType == "weekly"){
+      costumMinimumNight = 6;
+    }else if(customListingType == "monthly"){
+      costumMinimumNight = 29;
+    }
+    
+
+
     // eslint-disable-next-line no-unused-vars
     const { onBlur, onFocus, type, checked, ...restOfInput } = input;
     const inputProps = {
       isDaily,
-      minimumNights: isDaily ? 0 : 1,
+      minimumNights: costumMinimumNight,
       onBlur: this.handleBlur,
       onFocus: this.handleFocus,
       useMobileMargins,
@@ -140,6 +151,7 @@ FieldDateRangeInputComponent.defaultProps = {
   startDatePlaceholderText: null,
   focusedInput: null,
   onFocusedInputChange: null,
+  customListingType: null,
 };
 
 FieldDateRangeInputComponent.propTypes = {
@@ -160,6 +172,7 @@ FieldDateRangeInputComponent.propTypes = {
 
   isOutsideRange: func.isRequired,
   firstDayOfWeek: number.isRequired,
+  customListingType: string,
 };
 
 const FieldDateRangeInput = props => {
