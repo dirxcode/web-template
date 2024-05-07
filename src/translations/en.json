@@ -276,6 +276,7 @@
   "EditListingPricingPanel.createListingTitle": "Pricing",
   "EditListingPricingPanel.listingPriceCurrencyInvalid": "The listing currency is different from the marketplace currency ({marketplaceCurrency}). You cannot edit the price.",
   "EditListingPricingPanel.title": "Edit the pricing of {listingTitle}",
+  "EditListingPricingPanel.pricingPerListingType": "Price {customListingType, select, daily {per day} weekly {per week} monthly {per month} other {}}",
   "EditListingWizard.default-booking.new.saveAvailability": "Next",
   "EditListingWizard.default-booking.new.saveDetails": "Next",
   "EditListingWizard.default-booking.new.saveLocation": "Next",

@@ -46,7 +46,9 @@ const EditListingPricingPanel = props => {
     marketplaceCurrency && initialValues.price instanceof Money
       ? initialValues.price.currency === marketplaceCurrency
       : !!marketplaceCurrency;
-  const unitType = listing?.attributes?.publicData?.unitType;
+  const {unitType, listingType} = listing?.attributes?.publicData;
+
+  const customListingType = listingType.replace('-rental','');
 
   return (
     <div className={classes}>
@@ -63,6 +65,19 @@ const EditListingPricingPanel = props => {
           />
         )}
       </H3>
+      {listingType ? (
+        <div className={css.priceContainer}>
+          <div className={css.perUnit}>
+          <FormattedMessage id="EditListingPricingPanel.pricingPerListingType" values={{ customListingType }} />
+          </div><br></br>
+        </div>
+      ):(
+        <FormattedMessage
+            id="EditListingPricingPanel.createListingTitle"
+            values={{ lineBreak: <br /> }}
+          />
+      )}
+      
       {priceCurrencyValid ? (
         <EditListingPricingForm
           className={css.form}
