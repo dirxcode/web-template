@@ -5,41 +5,38 @@ import { bool, object } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
-import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
-
-import { lenderSectionId, customPageId, } from './CMSPage.duck';
-import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { SectionTabs } from '../PageBuilder/SectionBuilder';
 
+import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
 const PageBuilder = loadable(() =>
   import(/* webpackChunkName: "PageBuilder" */ '../PageBuilder/PageBuilder')
 );
 
-const tabSectionType = 'tab';
+const customPageId= "how-it-works";
+const lenderSectionId = 'lender_section';
+const tabSectionType = 'tabs';
 
 export const CMSPageComponent = props => {
-  const { params, pageAssetsData, listings, inProgress, error  } = props;
+  const { params, pageAssetsData, inProgress, error } = props;
   const pageId = params.pageId || props.pageId;
 
-  const pageData = pageAssetsData?.[customPageId]?.data;
+  if (!inProgress && error?.status === 404) {
+    return <NotFoundPage />;
+  }
 
-  const lenderSectionIdx = pageData?.sections.findIndex(s => s.sectionName === lenderSectionId);
-  const lenderSection = pageData?.sections[lenderSectionIdx];
+  if(pageId == customPageId){
+    const pageData = pageAssetsData?.[customPageId]?.data;
+    const lenderSectionIdx = pageData?.sections.findIndex(s => s.sectionName === lenderSectionId);
+    const lenderSection = pageData?.sections[lenderSectionIdx];
+      // Define the necessary props for the custom section
+    const customLenderSection = {
+      ...lenderSection,
+      sectionId: lenderSectionId,
+      sectionType: tabSectionType,
+      listings: [],
+    };
 
-
-
-  // Define the necessary props for the custom section
-  const customLenderSection = {
-    ...lenderSection,
-    sectionId: lenderSectionId,
-    sectionType: tabSectionType,
-    listings: listings,
-  };
-
-  // Replace the original section with the custom section object
-  // in custom page data
-  const customPageData = pageData
+    const customPageData = pageData
     ? {
         ...pageData,
         sections: pageData.sections.map((s, idx) =>
@@ -47,23 +44,27 @@ export const CMSPageComponent = props => {
         ),
       }
     : pageData;
-
-  if (!inProgress && error?.status === 404) {
-    return <NotFoundPage />;
-  }
-
-  return (
-    <PageBuilder
+    return (
+      <PageBuilder
       pageAssetsData={customPageData}
       inProgress={inProgress}
       schemaType="Article"
       options={{
         sectionComponents: {
           [tabSectionType]: { component: SectionTabs },
-        },}
-      }
+        },
+      }}
     />
-  );
+    );
+  }else{
+    return (
+      <PageBuilder
+        pageAssetsData={pageAssetsData?.[pageId]?.data}
+        inProgress={inProgress}
+        schemaType="Article"
+      />
+    );
+  }
 };
 
 CMSPageComponent.propTypes = {
@@ -73,9 +74,7 @@ CMSPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const { pageAssetsData, inProgress, error } = state.hostedAssets || {};
-  const { currentPageResultIds } = state.SearchPage;
-  const listings = getListingsById(state, currentPageResultIds);
-  return { pageAssetsData, listings, inProgress, error };
+  return { pageAssetsData, inProgress, error };
 };
 
 // Note: it is important that the withRouter HOC is **outside** the
