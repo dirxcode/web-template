@@ -13,6 +13,7 @@ const SectionContainer = props => {
   const Tag = as || 'section';
   const classes = classNames(rootClassName || css.root, className);
 
+  
   return (
     <Tag className={classes} id={id} {...otherProps}>
       {appearance?.fieldType === 'customAppearance' ? (

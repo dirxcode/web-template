@@ -7,6 +7,8 @@ import Field, { hasDataInFields } from '../../Field';
 import SectionContainer from '../SectionContainer';
 import css from './SectionHero.module.css';
 
+import { SecondaryButton, PrimaryButton } from '../../../../components/Button/Button';
+
 // Section component for a website's hero section
 // The Section Hero doesn't have any Blocks by default, all the configurations are made in the Section Hero settings
 const SectionHero = props => {
@@ -22,14 +24,19 @@ const SectionHero = props => {
     options,
   } = props;
 
+  const goToContactUs = () => {
+    window.location.href = 'mailto:hello@lendit.sg';
+  };
+
   // If external mapping has been included for fields
   // E.g. { h1: { component: MyAwesomeHeader } }
   const fieldComponents = options?.fieldComponents;
   const fieldOptions = { fieldComponents };
 
+  console.log(title.content);
   const hasHeaderFields = hasDataInFields([title, description, callToAction], fieldOptions);
-
   return (
+    <>
     <SectionContainer
       id={sectionId}
       className={className}
@@ -43,8 +50,20 @@ const SectionHero = props => {
           <Field data={description} className={defaultClasses.description} options={fieldOptions} />
           <Field data={callToAction} className={defaultClasses.ctaButton} options={fieldOptions} />
         </header>
+       
       ) : null}
+
+    {title.content == "Contact us" ? ( 
+      <>
+      <br></br>
+        <PrimaryButton onClick={goToContactUs}>
+          <span>Contact us</span>
+        </PrimaryButton>
+      </>
+    ): null}
+      
     </SectionContainer>
+    </>
   );
 };
 

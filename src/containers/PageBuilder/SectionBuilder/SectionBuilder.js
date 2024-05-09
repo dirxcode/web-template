@@ -48,7 +48,6 @@ const defaultSectionComponents = {
 const SectionBuilder = props => {
   const { sections, options } = props;
   const { sectionComponents = {}, isInsideContainer, ...otherOption } = options || {};
-
   // If there's no sections, we can't render the correct section component
   if (!sections || sections.length === 0) {
     return null;
@@ -90,7 +89,7 @@ const SectionBuilder = props => {
         const classes = classNames({ [css.darkTheme]: isDarkTheme });
         const sectionId = getUniqueSectionId(section.sectionId, index);
           
-        if (Section) {
+        if (Section) {  
             return (
               <Section
                 key={`${sectionId}_i${index}`}
