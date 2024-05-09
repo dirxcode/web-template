@@ -263,7 +263,8 @@ export const InboxPageComponent = props => {
     {
       text: (
         <span>
-          <FormattedMessage id="InboxPage.ordersTabTitle" />
+          <span>As a renter</span>
+          {/* <FormattedMessage id="InboxPage.ordersTabTitle" /> */}
         </span>
       ),
       selected: isOrders,
@@ -275,7 +276,8 @@ export const InboxPageComponent = props => {
     {
       text: (
         <span>
-          <FormattedMessage id="InboxPage.salesTabTitle" />
+          <span>As a lender</span>
+          {/* <FormattedMessage id="InboxPage.salesTabTitle" /> */}
           {providerNotificationCount > 0 ? (
             <NotificationBadge count={providerNotificationCount} />
           ) : null}
