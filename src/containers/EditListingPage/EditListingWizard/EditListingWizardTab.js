@@ -10,6 +10,7 @@ import {
 import { ensureListing } from '../../../util/data';
 import { createResourceLocatorString } from '../../../util/routes';
 import { propTypes } from '../../../util/types';
+import { getDefaultTimeZoneOnBrowser, timestampToDate } from '../../../util/dates';
 
 // Import modules from this directory
 import EditListingAvailabilityPanel from './EditListingAvailabilityPanel/EditListingAvailabilityPanel';
@@ -29,6 +30,58 @@ export const DELIVERY = 'delivery';
 export const LOCATION = 'location';
 export const AVAILABILITY = 'availability';
 export const PHOTOS = 'photos';
+
+const defaultTimeZone = () =>
+  typeof window !== 'undefined' ? getDefaultTimeZoneOnBrowser() : 'Etc/UTC';
+
+const defaultWeeklyDays = {
+  "type": "availability-plan/time",
+  "timezone": defaultTimeZone(),
+  "entries": [
+    {
+      "dayOfWeek": "sun",
+      "startTime": "00:00",
+      "endTime": "00:00",
+      "seats": 1,
+    },
+    {
+      "dayOfWeek": "mon",
+      "startTime": "00:00",
+      "endTime": "00:00",
+      "seats": 1,
+    },
+    {
+      "dayOfWeek": "tue",
+      "startTime": "00:00",
+      "endTime": "00:00",
+      "seats": 1,
+    },
+    {
+      "dayOfWeek": "wed",
+      "startTime": "00:00",
+      "endTime": "00:00",
+      "seats": 1,
+    },
+    {
+      "dayOfWeek": "thu",
+      "startTime": "00:00",
+      "endTime": "00:00",
+      "seats": 1,
+    },
+    {
+      "dayOfWeek": "fri",
+      "startTime": "00:00",
+      "endTime": "00:00",
+      "seats": 1,
+    },
+    {
+      "dayOfWeek": "sat",
+      "startTime": "00:00",
+      "endTime": "00:00",
+      "seats": 1,
+    }
+  ]
+};
 
 // EditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [
@@ -241,7 +294,7 @@ const EditListingWizardTab = props => {
       const userListingType = listing?.attributes?.publicData?.listingType || "";
       return (
         <EditListingAvailabilityPanel
-        userListingType={userListingType}
+          userListingType={userListingType}
           allExceptions={allExceptions}
           weeklyExceptionQueries={weeklyExceptionQueries}
           monthlyExceptionQueries={monthlyExceptionQueries}
@@ -261,6 +314,7 @@ const EditListingWizardTab = props => {
           config={config}
           history={history}
           routeConfiguration={routeConfiguration}
+          defaultWeeklyDays={defaultWeeklyDays}
           {...panelProps(AVAILABILITY)}
         />
       );

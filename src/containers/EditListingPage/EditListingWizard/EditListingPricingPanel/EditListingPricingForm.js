@@ -37,10 +37,6 @@ const getPriceValidators = (listingMinimumPriceSubUnits, marketplaceCurrency, in
     listingMinimumPriceSubUnits
   );
 
-  console.log(
-    "listingMinimumPriceSubUnits",listingMinimumPriceSubUnits
-  )
-
   return listingMinimumPriceSubUnits
     ? validators.composeValidators(priceRequired, minPriceRequired)
     : priceRequired;

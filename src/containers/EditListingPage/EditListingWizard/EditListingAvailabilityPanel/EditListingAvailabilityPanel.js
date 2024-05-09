@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { arrayOf, bool, func, object, string } from 'prop-types';
 import classNames from 'classnames';
 
@@ -98,6 +98,8 @@ const createAvailabilityPlan = values => ({
   },
 });
 
+
+
 //////////////////////////////////
 // EditListingAvailabilityPanel //
 //////////////////////////////////
@@ -124,20 +126,10 @@ const EditListingAvailabilityPanel = props => {
     errors,
     config,
     routeConfiguration,
+    defaultWeeklyDays,
     history,
   } = props;
   // Hooks
-  const [isEditPlanModalOpen, setIsEditPlanModalOpen] = useState(false);
-  const [isEditExceptionsModalOpen, setIsEditExceptionsModalOpen] = useState(false);
-  const [valuesFromLastSubmit, setValuesFromLastSubmit] = useState(null);
-
-  const firstDayOfWeek = config.localization.firstDayOfWeek;
-  const classes = classNames(rootClassName || css.root, className);
-  const listingAttributes = listing?.attributes;
-  const unitType = listingAttributes?.publicData?.unitType;
-  const useFullDays = isFullDay(unitType);
-  const hasAvailabilityPlan = !!listingAttributes?.availabilityPlan;
-  const isPublished = listing?.id && listingAttributes?.state !== LISTING_STATE_DRAFT;
   const defaultAvailabilityPlan = {
     type: 'availability-plan/time',
     timezone: defaultTimeZone(),
@@ -151,7 +143,50 @@ const EditListingAvailabilityPanel = props => {
       // { dayOfWeek: 'sun', startTime: '09:00', endTime: '17:00', seats: 1 },
     ],
   };
-  const availabilityPlan = listingAttributes?.availabilityPlan || defaultAvailabilityPlan;
+
+  const [isEditPlanModalOpen, setIsEditPlanModalOpen] = useState(false);
+  const [isEditExceptionsModalOpen, setIsEditExceptionsModalOpen] = useState(false);
+  const [valuesFromLastSubmit, setValuesFromLastSubmit] = useState(null);
+  const [availabilityPlan, setAvailabilityPlan] = useState(defaultWeeklyDays);
+  const [hasAvailabilityPlan, setHasAvailabilityPlan] = useState(false);
+  const [first,setFirst] = useState(false);
+
+
+  const firstDayOfWeek = config.localization.firstDayOfWeek;
+  const classes = classNames(rootClassName || css.root, className);
+  const listingAttributes = listing?.attributes;
+  const {unitType, listingType} = listingAttributes?.publicData;
+  const useFullDays = isFullDay(unitType);
+
+  const isPublished = listing?.id && listingAttributes?.state !== LISTING_STATE_DRAFT;
+
+  useEffect(() => {
+    const isAvailabilityPlanExist = !!listingAttributes?.availabilityPlan;
+    console.log("listingType",listingType, "first",first);
+    if(listingType != 'daily-rental' && first == false){
+      if(!!isAvailabilityPlanExist){
+        console.log("1",isAvailabilityPlanExist)
+        setHasAvailabilityPlan(true);
+        handleSubmit(defaultWeeklyDays);
+        setFirst(true);
+      }else{
+        console.log(2,isAvailabilityPlanExist);
+        setHasAvailabilityPlan(true);
+        handleSubmit(defaultWeeklyDays);
+        setFirst(true);
+      }
+    }else if(first == false){
+      setHasAvailabilityPlan(!!listingAttributes?.availabilityPlan);
+      // setHasAvailabilityPlan(!!listingAttributes?.availabilityPlan);
+      setAvailabilityPlan(listingAttributes?.availabilityPlan || defaultWeeklyDays);
+      setFirst(true);
+    }
+    
+  },[listingType, listingAttributes]);
+
+
+  // const hasAvailabilityPlan = !!listingAttributes?.availabilityPlan;
+  // const availabilityPlan = listingAttributes?.availabilityPlan || defaultAvailabilityPlan;
   const initialValues = valuesFromLastSubmit
     ? valuesFromLastSubmit
     : createInitialValues(availabilityPlan);
@@ -347,6 +382,7 @@ EditListingAvailabilityPanel.defaultProps = {
   monthlyExceptionQueries: null,
   weeklyExceptionQueries: null,
   allExceptions: [],
+  defaultWeeklyDays: null,
 };
 
 EditListingAvailabilityPanel.propTypes = {
@@ -368,6 +404,7 @@ EditListingAvailabilityPanel.propTypes = {
   submitButtonText: string.isRequired,
   updateInProgress: bool.isRequired,
   errors: object.isRequired,
+  defaultWeeklyDays: object.isRequired,
 };
 
 export default EditListingAvailabilityPanel;
