@@ -42,7 +42,7 @@ import {
   OrderBreakdown,
   OrderPanel,
   LayoutSingleColumn,
-  SecondaryButton,
+  InlineTextButton,
 } from '../../components';
 
 import TopbarContainer from '../../containers/TopbarContainer/TopbarContainer';
@@ -403,17 +403,20 @@ export const TransactionPageComponent = props => {
     ? {
         orderBreakdown: (
           <>
-          <OrderBreakdown
-            className={css.breakdown}
-            userRole={transactionRole}
-            transaction={transaction}
-            {...txBookingMaybe}
-            currency={config.currency}
-            marketplaceName={config.marketplaceName}
-          />
-            <SecondaryButton  onClick={goToContactUs}>
-            <span>Need help? Contact us</span>
-            </SecondaryButton>
+            <OrderBreakdown
+              className={css.breakdown}
+              userRole={transactionRole}
+              transaction={transaction}
+              {...txBookingMaybe}
+              currency={config.currency}
+              marketplaceName={config.marketplaceName}
+            />
+            <center>
+              <InlineTextButton  onClick={goToContactUs}>
+                <span>Need help? Contact us</span>
+              </InlineTextButton>
+            </center>
+            <br></br>
           </>
         ),
       }
@@ -502,6 +505,7 @@ export const TransactionPageComponent = props => {
           dayCountAvailableForBooking={config.stripe.dayCountAvailableForBooking}
           marketplaceName={config.marketplaceName}
         />
+         
         </>
       }
     />
