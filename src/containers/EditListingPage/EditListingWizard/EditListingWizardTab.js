@@ -41,43 +41,43 @@ const defaultWeeklyDays = {
     {
       "dayOfWeek": "sun",
       "startTime": "00:00",
-      "endTime": "00:00",
+      "endTime": "24:00",
       "seats": 1,
     },
     {
       "dayOfWeek": "mon",
       "startTime": "00:00",
-      "endTime": "00:00",
+      "endTime": "24:00",
       "seats": 1,
     },
     {
       "dayOfWeek": "tue",
       "startTime": "00:00",
-      "endTime": "00:00",
+      "endTime": "24:00",
       "seats": 1,
     },
     {
       "dayOfWeek": "wed",
       "startTime": "00:00",
-      "endTime": "00:00",
+      "endTime": "24:00",
       "seats": 1,
     },
     {
       "dayOfWeek": "thu",
       "startTime": "00:00",
-      "endTime": "00:00",
+      "endTime": "24:00",
       "seats": 1,
     },
     {
       "dayOfWeek": "fri",
       "startTime": "00:00",
-      "endTime": "00:00",
+      "endTime": "24:00",
       "seats": 1,
     },
     {
       "dayOfWeek": "sat",
       "startTime": "00:00",
-      "endTime": "00:00",
+      "endTime": "24:00",
       "seats": 1,
     }
   ]

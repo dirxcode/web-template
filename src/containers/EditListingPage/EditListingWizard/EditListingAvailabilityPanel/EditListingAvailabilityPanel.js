@@ -255,22 +255,45 @@ const EditListingAvailabilityPanel = props => {
       </H3>
 
       <div className={css.planInfo}>
-        {!hasAvailabilityPlan ? (
+        {/* {!hasAvailabilityPlan && (
           <p>
-            <FormattedMessage id="EditListingAvailabilityPanel.availabilityPlanInfo" />
+            <FormattedMessage
+              id={listingType === "daily-rental"
+                ? "EditListingAvailabilityPanel.availabilityDailyPlanInfo"
+                : "EditListingAvailabilityPanel.availabilityWeekMonthPlanInfo"}
+            />
           </p>
-        ) : null}
+        )} */}
+          <p>
+            <FormattedMessage
+              id={listingType === "daily-rental"
+                ? "EditListingAvailabilityPanel.availabilityDailyPlanInfo"
+                : "EditListingAvailabilityPanel.availabilityWeekMonthPlanInfo"}
+            />
+          </p>
 
-        <InlineTextButton
-          className={css.editPlanButton}
-          onClick={() => setIsEditPlanModalOpen(true)}
-        >
-          {hasAvailabilityPlan ? (
-            <FormattedMessage id="EditListingAvailabilityPanel.editAvailabilityPlan" />
-          ) : (
-            <FormattedMessage id="EditListingAvailabilityPanel.setAvailabilityPlan" />
+          {listingType === "daily-rental" && (
+            hasAvailabilityPlan ? (
+              <>
+                <InlineTextButton
+                    className={css.editPlanButton}
+                    onClick={() => setIsEditPlanModalOpen(true)}
+                >
+                  <FormattedMessage id="EditListingAvailabilityPanel.editAvailabilityPlan" />
+                </InlineTextButton>
+              </>
+            ) : (
+              <>
+                <InlineTextButton
+                  className={css.editPlanButton}
+                  onClick={() => setIsEditPlanModalOpen(true)}
+                >
+                  <FormattedMessage id="EditListingAvailabilityPanel.setAvailabilityPlan" />
+                </InlineTextButton>
+              </>
+            )
           )}
-        </InlineTextButton>
+        
       </div>
 
       {hasAvailabilityPlan ? (
