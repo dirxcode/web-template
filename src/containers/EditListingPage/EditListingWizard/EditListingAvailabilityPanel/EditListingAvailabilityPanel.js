@@ -162,10 +162,8 @@ const EditListingAvailabilityPanel = props => {
 
   useEffect(() => {
     const isAvailabilityPlanExist = !!listingAttributes?.availabilityPlan;
-    console.log("listingType",listingType, "first",first);
     if(listingType != 'daily-rental' && first == false){
       if(!!isAvailabilityPlanExist){
-        console.log("1",isAvailabilityPlanExist)
         setHasAvailabilityPlan(true);
         handleSubmit(defaultWeeklyDays);
         setFirst(true);

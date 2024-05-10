@@ -42,6 +42,7 @@ import {
   OrderBreakdown,
   OrderPanel,
   LayoutSingleColumn,
+  SecondaryButton,
 } from '../../components';
 
 import TopbarContainer from '../../containers/TopbarContainer/TopbarContainer';
@@ -391,10 +392,17 @@ export const TransactionPageComponent = props => {
   const timeZone = listing?.attributes?.availabilityPlan?.timezone;
   const dateType = lineItemUnitType === LINE_ITEM_HOUR ? DATE_TYPE_DATETIME : DATE_TYPE_DATE;
 
+  const goToContactUs = () => {
+    window.location.href = 'mailto:hello@lendit.sg';
+  };
+
+  
+
   const txBookingMaybe = booking?.id ? { booking, dateType, timeZone } : {};
   const orderBreakdownMaybe = hasLineItems
     ? {
         orderBreakdown: (
+          <>
           <OrderBreakdown
             className={css.breakdown}
             userRole={transactionRole}
@@ -403,6 +411,10 @@ export const TransactionPageComponent = props => {
             currency={config.currency}
             marketplaceName={config.marketplaceName}
           />
+            <SecondaryButton  onClick={goToContactUs}>
+            <span>Need help? Contact us</span>
+            </SecondaryButton>
+          </>
         ),
       }
     : {};
@@ -454,6 +466,7 @@ export const TransactionPageComponent = props => {
       config={config}
       {...orderBreakdownMaybe}
       orderPanel={
+        <>
         <OrderPanel
           className={css.orderPanel}
           titleClassName={css.orderTitle}
@@ -489,6 +502,7 @@ export const TransactionPageComponent = props => {
           dayCountAvailableForBooking={config.stripe.dayCountAvailableForBooking}
           marketplaceName={config.marketplaceName}
         />
+        </>
       }
     />
   ) : (
