@@ -507,6 +507,16 @@
   }
 }
 
+.justHeadingText {
+  padding: 0 24px;
+  margin-bottom: 6px;
+
+  @media (--viewportMedium) {
+    padding: 0;
+    margin-bottom: 10px;
+  }
+}
+
 .sectionHeading,
 .sectionHeadingWithExtraMargin {
   /* Font for sections titles */

@@ -74,7 +74,7 @@ import SectionReviews from './SectionReviews';
 import SectionAuthorMaybe from './SectionAuthorMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import SectionGallery from './SectionGallery';
-import SectionMeetUp from './SectionMeetUp.js';
+import SectionHeadingMaybe from './SectionHeadingMaybe.js';
 import CustomListingFields from './CustomListingFields';
 
 import css from './ListingPage.module.css';
@@ -334,7 +334,11 @@ export const ListingPageComponent = props => {
             </div>
             <SectionTextMaybe heading={"Listing Description : "} text={description} showAsIngress />
 
-            <SectionMeetUp heading={"Deal Method : "} text={"Meet-up (Free)"} showAsIngress />
+            <SectionTextMaybe heading={"Deal Method : "} text={"Meet-up (Free)"} showAsIngress />
+            
+            {
+              listingConfig.listingFields.length > 0 ? <SectionHeadingMaybe heading={"Listing Categories : "} showAsIngress /> : null
+            }
             
             <CustomListingFields
               publicData={publicData}
@@ -343,7 +347,7 @@ export const ListingPageComponent = props => {
               categoryConfiguration={config.categoryConfiguration}
               intl={intl}
             />
-
+           
             <SectionMapMaybe
               geolocation={geolocation}
               publicData={publicData}

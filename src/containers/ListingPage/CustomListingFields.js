@@ -7,9 +7,6 @@ import {
   pickCategoryFields,
   pickCustomFieldProps,
 } from '../../util/fieldHelpers.js';
-
-import { Heading } from '../../components';
-
 import SectionDetailsMaybe from './SectionDetailsMaybe';
 import SectionMultiEnumMaybe from './SectionMultiEnumMaybe';
 import SectionTextMaybe from './SectionTextMaybe';
@@ -43,21 +40,27 @@ const CustomListingFields = props => {
       isFieldForSelectedCategories
     ) || [];
 
+    let index = 0;
+
   return (
     <>
-    <Heading as={"h4"}>Listing Categories :</Heading>
+    <section>
       <SectionDetailsMaybe {...props} isFieldForCategory={isFieldForSelectedCategories} />
       {propsForCustomFields.map(customFieldProps => {
         const { schemaType, ...fieldProps } = customFieldProps;
-        return schemaType === SCHEMA_TYPE_MULTI_ENUM ? (
-          <>
-            <SectionMultiEnumMaybe {...fieldProps} />
-          </>
+
+        // Use the spread operator to pass the current index as a prop
+        const element = schemaType === SCHEMA_TYPE_MULTI_ENUM ? (
+          <SectionMultiEnumMaybe {...fieldProps} index={index} />
         ) : schemaType === SCHEMA_TYPE_TEXT ? (
-          <SectionTextMaybe {...fieldProps} />
+          <SectionTextMaybe {...fieldProps} index={index} />
         ) : null;
+
+        index++;  // Increment index after deciding what to render
+        return element;
       })}
-    </>
+    </section>
+  </>
   );
 };
 
