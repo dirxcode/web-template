@@ -74,6 +74,7 @@ import SectionReviews from './SectionReviews';
 import SectionAuthorMaybe from './SectionAuthorMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import SectionGallery from './SectionGallery';
+import SectionMeetUp from './SectionMeetUp.js';
 import CustomListingFields from './CustomListingFields';
 
 import css from './ListingPage.module.css';
@@ -331,8 +332,10 @@ export const ListingPageComponent = props => {
                 <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
               </H4>
             </div>
-            <SectionTextMaybe text={description} showAsIngress />
+            <SectionTextMaybe heading={"Listing Description : "} text={description} showAsIngress />
 
+            <SectionMeetUp heading={"Deal Method : "} text={"Meet-up (Free)"} showAsIngress />
+            
             <CustomListingFields
               publicData={publicData}
               metadata={metadata}

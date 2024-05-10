@@ -9,19 +9,24 @@ const SectionMultiEnumMaybe = props => {
     return null;
   }
 
-  return (
-    <section className={css.sectionMultiEnum}>
-      <Heading as="h2" rootClassName={css.sectionHeading}>
-        {heading}
-      </Heading>
-      <PropertyGroup
-        id="ListingPage.amenities"
-        options={options}
-        selectedOptions={selectedOptions}
-        twoColumns={options.length > 5}
-      />
-    </section>
-  );
+
+  if(selectedOptions.length > 0){
+    return (
+      <section className={css.sectionMultiEnum}>
+        <Heading as="h1" rootClassName={css.sectionHeading}>
+          {heading}
+        </Heading>
+        <PropertyGroup
+          id="ListingPage.amenities"
+          options={options}
+          selectedOptions={selectedOptions}
+          twoColumns={options.length > 5}
+        />
+      </section>
+    );
+  }else{
+    return null;
+  }
 };
 
 export default SectionMultiEnumMaybe;

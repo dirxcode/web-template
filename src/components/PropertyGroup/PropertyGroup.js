@@ -57,12 +57,18 @@ const PropertyGroup = props => {
   const listClasses = twoColumns ? classNames(classes, css.twoColumns) : classes;
 
   const checked = checkSelected(options, selectedOptions);
-
+  
   return (
+   
     <ul className={listClasses}>
-      {checked.map(option => (
-        <Item key={`${id}.${option.key}`} label={option.label} isSelected={option.isSelected} />
-      ))}
+      {checked.map(option => {
+          if(option.isSelected){
+            return <Item key={`${id}.${option.key}`} label={option.label} isSelected={option.isSelected} />
+          }else{
+            return null;
+          } 
+        })
+      }
     </ul>
   );
 };

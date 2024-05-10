@@ -8,6 +8,8 @@ import {
   pickCustomFieldProps,
 } from '../../util/fieldHelpers.js';
 
+import { Heading } from '../../components';
+
 import SectionDetailsMaybe from './SectionDetailsMaybe';
 import SectionMultiEnumMaybe from './SectionMultiEnumMaybe';
 import SectionTextMaybe from './SectionTextMaybe';
@@ -43,11 +45,14 @@ const CustomListingFields = props => {
 
   return (
     <>
+    <Heading as={"h4"}>Listing Categories :</Heading>
       <SectionDetailsMaybe {...props} isFieldForCategory={isFieldForSelectedCategories} />
       {propsForCustomFields.map(customFieldProps => {
         const { schemaType, ...fieldProps } = customFieldProps;
         return schemaType === SCHEMA_TYPE_MULTI_ENUM ? (
-          <SectionMultiEnumMaybe {...fieldProps} />
+          <>
+            <SectionMultiEnumMaybe {...fieldProps} />
+          </>
         ) : schemaType === SCHEMA_TYPE_TEXT ? (
           <SectionTextMaybe {...fieldProps} />
         ) : null;
