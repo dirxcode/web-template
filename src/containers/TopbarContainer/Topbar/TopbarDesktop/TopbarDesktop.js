@@ -70,7 +70,7 @@ const ProfileMenu = ({ currentPage, currentUser, onLogout }) => {
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
-        <MenuItem key="ProfilePage">
+        {(currentUser!= null) ? <MenuItem key="ProfilePage">
           <NamedLink
             className={classNames(css.menuLink, currentPageClass('ProfilePage'))}
             name="ProfilePage"
@@ -79,7 +79,8 @@ const ProfileMenu = ({ currentPage, currentUser, onLogout }) => {
             <span className={css.menuItemBorder} />
             <FormattedMessage id="TopbarDesktop.myProfile" />
           </NamedLink>
-        </MenuItem>
+        </MenuItem> : null}
+        
         <MenuItem key="ManageListingsPage">
           <NamedLink
             className={classNames(css.menuLink, currentPageClass('ManageListingsPage'))}
