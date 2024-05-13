@@ -74,7 +74,7 @@ const ProfileMenu = ({ currentPage, currentUser, onLogout }) => {
           <NamedLink
             className={classNames(css.menuLink, currentPageClass('ProfilePage'))}
             name="ProfilePage"
-            params={{ id: currentUser.id.uuid }}
+            params={{ id: currentUser?.id?.uuid }}
           >
             <span className={css.menuItemBorder} />
             <FormattedMessage id="TopbarDesktop.myProfile" />
