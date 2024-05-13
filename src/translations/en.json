@@ -965,6 +965,7 @@
   "TopbarDesktop.profileSettingsLink": "Profile settings",
   "TopbarDesktop.signup": "Sign up",
   "TopbarDesktop.yourListingsLink": "Your listings",
+  "TopbarDesktop.myProfile": "My profile",
   "TopbarMobileMenu.accountSettingsLink": "Account settings",
   "TopbarMobileMenu.greeting": "Hello {displayName}",
   "TopbarMobileMenu.inboxLink": "Inbox",

@@ -70,6 +70,16 @@ const ProfileMenu = ({ currentPage, currentUser, onLogout }) => {
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
+        <MenuItem key="ProfilePage">
+          <NamedLink
+            className={classNames(css.menuLink, currentPageClass('ProfilePage'))}
+            name="ProfilePage"
+            params={{ id: currentUser.id.uuid }}
+          >
+            <span className={css.menuItemBorder} />
+            <FormattedMessage id="TopbarDesktop.myProfile" />
+          </NamedLink>
+        </MenuItem>
         <MenuItem key="ManageListingsPage">
           <NamedLink
             className={classNames(css.menuLink, currentPageClass('ManageListingsPage'))}
@@ -137,6 +147,8 @@ const TopbarDesktop = props => {
   const giveSpaceForSearch = customLinks == null || customLinks?.length === 0;
   const classes = classNames(rootClassName || css.root, className);
 
+
+  
   const inboxLinkMaybe = authenticatedOnClientSide ? (
     <InboxLink
       notificationCount={notificationCount}
