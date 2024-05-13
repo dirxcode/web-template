@@ -176,6 +176,7 @@ const EditListingAvailabilityPanel = props => {
   const listingAttributes = listing?.attributes;
   const {unitType, listingType} = listingAttributes?.publicData;
   const useFullDays = isFullDay(unitType);
+  const customListingType = listingType.replace('-rental','');
 
   const isPublished = listing?.id && listingAttributes?.state !== LISTING_STATE_DRAFT;
 
@@ -281,14 +282,25 @@ const EditListingAvailabilityPanel = props => {
             />
           </p>
         )} */}
-          <p>
-            <FormattedMessage
-              id={listingType === "daily-rental"
-                ? "EditListingAvailabilityPanel.availabilityDailyPlanInfo"
-                : "EditListingAvailabilityPanel.availabilityWeekMonthPlanInfo"}
-            />
-          </p>
-
+        {
+          listingType === "daily-rental" ? (
+            <p>
+              <span>For your </span>
+              <span className={css.listingTypeInfo}>
+                <FormattedMessage id="EditListingAvailabilityPanel.listingTypeInfo" values={{ customListingType }}/>
+              </span>
+              <FormattedMessage id="EditListingAvailabilityPanel.availabilityDailyPlanInfo" />
+            </p>
+          ) : (
+            <p>
+              <span>Your </span>
+              <span className={css.listingTypeInfo}>
+                <FormattedMessage id="EditListingAvailabilityPanel.listingTypeInfo" values={{ customListingType }}/>
+              </span>
+              <FormattedMessage id="EditListingAvailabilityPanel.availabilityWeekMonthPlanInfo"/>
+            </p>
+          )
+        }
           {listingType === "daily-rental" && (
             hasAvailabilityPlan ? (
               <>

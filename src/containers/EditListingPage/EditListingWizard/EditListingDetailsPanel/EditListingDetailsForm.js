@@ -253,7 +253,16 @@ const AddListingFields = props => {
       : pickedFields;
   }, []);
 
-  return <>{fields}</>;
+  return <>
+    <Heading as="h4" rootClassName={css.subheading}>
+      {intl.formatMessage({ id: 'EditListingDetailsForm.categories' })}
+    </Heading>
+    <span rootClassName={css.selectedLabel} className={css.info}><i>
+      {intl.formatMessage({ id: 'EditListingDetailsForm.selectCategoriesInfo' })}
+      </i>
+    </span>
+    {fields}
+  </>;
 };
 
 // Form that asks title, description, transaction process and unit type for pricing

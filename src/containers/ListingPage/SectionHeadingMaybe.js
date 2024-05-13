@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 20;
 
-const SectionMeetUp = props => {
+const SectionHeadingMaybe = props => {
   const { text, heading, showAsIngress = false } = props;
   const textClass = showAsIngress ? css.ingress : css.text;
   const content = richText(text, {
@@ -16,20 +16,13 @@ const SectionMeetUp = props => {
     breakChars: '/',
   });
 
-  
-
-  return text ? (
-    <section className={css.sectionText}>
-      {heading ? (
+  return heading ? (
+    <section className={css.justHeadingText}>
         <Heading as={"h4"}>
           {heading}
         </Heading>
-      ) : null}
-      <ul className={classNames(css.root, css.twoColumns)}>
-        <p className={textClass}>{content}</p>
-      </ul>
     </section>
   ) : null;
 };
 
-export default SectionMeetUp;
+export default SectionHeadingMaybe;
