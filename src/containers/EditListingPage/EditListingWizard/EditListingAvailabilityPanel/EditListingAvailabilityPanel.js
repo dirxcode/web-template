@@ -31,6 +31,20 @@ const rotateDays = (days, startOfWeek) => {
 const defaultTimeZone = () =>
   typeof window !== 'undefined' ? getDefaultTimeZoneOnBrowser() : 'Etc/UTC';
 
+//variable to insert data 
+//for weekly and monthly
+const defaultInsertDays = {
+  timezone: "Asia/Jakarta",
+  activePlanDays: ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
+  mon: [{startTime: "00:00", endTime: "24:00"}],
+  tue: [{startTime: "00:00", endTime: "24:00"}],
+  wed: [{startTime: "00:00", endTime: "24:00"}],
+  thu: [{startTime: "00:00", endTime: "24:00"}],
+  fri: [{startTime: "00:00", endTime: "24:00"}],
+  sat: [{startTime: "00:00", endTime: "24:00"}],
+  sun: [{startTime: "00:00", endTime: "24:00"}],
+};
+
 ///////////////////////////////////////////////////
 // EditListingAvailabilityExceptionPanel - utils //
 ///////////////////////////////////////////////////
@@ -70,24 +84,29 @@ const createInitialValues = availabilityPlan => {
 };
 
 // Create entries from submit values
-const createEntriesFromSubmitValues = values =>
-  WEEKDAYS.reduce((allEntries, dayOfWeek) => {
+const createEntriesFromSubmitValues = values => {
+  const result = WEEKDAYS.reduce((allEntries, dayOfWeek) => {
     const dayValues = values[dayOfWeek] || [];
     const dayEntries = dayValues.map(dayValue => {
       const { startTime, endTime } = dayValue;
       // Note: This template doesn't support seats yet.
-      return startTime && endTime
-        ? {
-            dayOfWeek,
-            seats: 1,
-            startTime,
-            endTime: endTime === '24:00' ? '00:00' : endTime,
-          }
-        : null;
+      if (startTime && endTime) {
+        return {
+          dayOfWeek,
+          seats: 1,
+          startTime,
+          endTime: endTime === '24:00' ? '00:00' : endTime,
+        };
+      } else {
+        return null;
+      }
     });
 
-    return allEntries.concat(dayEntries.filter(e => !!e));
+    return allEntries.concat(dayEntries.filter(e => e !== null));
   }, []);
+  return result;
+};
+
 
 // Create availabilityPlan from submit values
 const createAvailabilityPlan = values => ({
@@ -149,7 +168,7 @@ const EditListingAvailabilityPanel = props => {
   const [valuesFromLastSubmit, setValuesFromLastSubmit] = useState(null);
   const [availabilityPlan, setAvailabilityPlan] = useState(defaultWeeklyDays);
   const [hasAvailabilityPlan, setHasAvailabilityPlan] = useState(false);
-  const [first,setFirst] = useState(false);
+  const [isInitialized,setIsInitialized] = useState(false);
 
 
   const firstDayOfWeek = config.localization.firstDayOfWeek;
@@ -162,24 +181,22 @@ const EditListingAvailabilityPanel = props => {
 
   useEffect(() => {
     const isAvailabilityPlanExist = !!listingAttributes?.availabilityPlan;
-    if(listingType != 'daily-rental' && first == false){
-      if(!!isAvailabilityPlanExist){
+    setIsInitialized(true);
+
+    if (listingType !== 'daily-rental') {
+      if (!isAvailabilityPlanExist && !isInitialized) {
+        handleSubmit(defaultInsertDays);
         setHasAvailabilityPlan(true);
-        handleSubmit(defaultWeeklyDays);
-        setFirst(true);
-      }else{
-        console.log(2,isAvailabilityPlanExist);
-        setHasAvailabilityPlan(true);
-        handleSubmit(defaultWeeklyDays);
-        setFirst(true);
+      } else {
+        setHasAvailabilityPlan(isAvailabilityPlanExist);
       }
-    }else if(first == false){
-      setHasAvailabilityPlan(!!listingAttributes?.availabilityPlan);
-      // setHasAvailabilityPlan(!!listingAttributes?.availabilityPlan);
+    } else if (listingType === 'daily-rental' && isInitialized) {
+      setHasAvailabilityPlan(isAvailabilityPlanExist);
       setAvailabilityPlan(listingAttributes?.availabilityPlan || defaultWeeklyDays);
-      setFirst(true);
+    } else if (!isInitialized) {
+      setHasAvailabilityPlan(isAvailabilityPlanExist);
+      setAvailabilityPlan(defaultWeeklyDays);
     }
-    
   },[listingType, listingAttributes]);
 
 

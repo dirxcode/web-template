@@ -35,52 +35,17 @@ const defaultTimeZone = () =>
   typeof window !== 'undefined' ? getDefaultTimeZoneOnBrowser() : 'Etc/UTC';
 
 const defaultWeeklyDays = {
-  "type": "availability-plan/time",
-  "timezone": defaultTimeZone(),
-  "entries": [
-    {
-      "dayOfWeek": "sun",
-      "startTime": "00:00",
-      "endTime": "24:00",
-      "seats": 1,
-    },
-    {
-      "dayOfWeek": "mon",
-      "startTime": "00:00",
-      "endTime": "24:00",
-      "seats": 1,
-    },
-    {
-      "dayOfWeek": "tue",
-      "startTime": "00:00",
-      "endTime": "24:00",
-      "seats": 1,
-    },
-    {
-      "dayOfWeek": "wed",
-      "startTime": "00:00",
-      "endTime": "24:00",
-      "seats": 1,
-    },
-    {
-      "dayOfWeek": "thu",
-      "startTime": "00:00",
-      "endTime": "24:00",
-      "seats": 1,
-    },
-    {
-      "dayOfWeek": "fri",
-      "startTime": "00:00",
-      "endTime": "24:00",
-      "seats": 1,
-    },
-    {
-      "dayOfWeek": "sat",
-      "startTime": "00:00",
-      "endTime": "24:00",
-      "seats": 1,
-    }
-  ]
+  type: 'availability-plan/time',
+  timezone: defaultTimeZone(),
+  entries: [
+    { dayOfWeek: 'mon', startTime: '00:00', endTime: '00:00', seats: 1 },
+    { dayOfWeek: 'tue', startTime: '00:00', endTime: '00:00', seats: 1 },
+    { dayOfWeek: 'wed', startTime: '00:00', endTime: '00:00', seats: 1 },
+    { dayOfWeek: 'thu', startTime: '00:00', endTime: '00:00', seats: 1 },
+    { dayOfWeek: 'fri', startTime: '00:00', endTime: '00:00', seats: 1 },
+    { dayOfWeek: 'sat', startTime: '00:00', endTime: '00:00', seats: 1 },
+    { dayOfWeek: 'sun', startTime: '00:00', endTime: '00:00', seats: 1 },
+  ],
 };
 
 // EditListingWizardTab component supports these tabs
@@ -187,9 +152,17 @@ const EditListingWizardTab = props => {
   };
 
   const onCompleteEditListingWizardTab = (tab, updateValues) => {
+    // const onUpdateListingOrCreateListingDraft = isNewURI
+    //   ? (tab, values) => onCreateListingDraft(values, config)
+    //   : (tab, values) => onUpdateListing(tab, values, config);
     const onUpdateListingOrCreateListingDraft = isNewURI
-      ? (tab, values) => onCreateListingDraft(values, config)
-      : (tab, values) => onUpdateListing(tab, values, config);
+    ? (tab, values) => {
+        return onCreateListingDraft(values, config);
+    }
+    : (tab, values) => {
+        return onUpdateListing(tab, values, config);
+    };
+
 
     const updateListingValues = isNewURI
       ? updateValues
@@ -228,6 +201,7 @@ const EditListingWizardTab = props => {
       onManageDisableScrolling,
       userListingType: userListingType,
       onSubmit: values => {
+
         return onCompleteEditListingWizardTab(tab, values);
       },
     };
