@@ -15,6 +15,7 @@ import {
   MenuItem,
   NamedLink,
 } from '../../../../components';
+import { ensureUser, ensureCurrentUser } from '../../../../util/data';
 
 import TopbarSearchForm from '../TopbarSearchForm/TopbarSearchForm';
 import CustomLinksMenu from './CustomLinksMenu/CustomLinksMenu';
@@ -64,23 +65,36 @@ const ProfileMenu = ({ currentPage, currentUser, onLogout }) => {
     return currentPage === page || isAccountSettingsPage ? css.currentPage : null;
   };
 
+  const userIsCurrentUser = currentUser && currentUser.type === 'currentUser';
+  const ensuredUser = userIsCurrentUser ? ensureCurrentUser(currentUser) : ensureUser(currentUser);
+
+  const links = ensuredUser.id ? (
+        <MenuItem key="ProfilePage">
+          <NamedLink
+            className={classNames(css.menuLink, currentPageClass('ProfilePage'))}
+            name="ProfilePage"
+            params={{ id: currentUser.id.uuid }}
+          >
+            <span className={css.menuItemBorder} />
+            <FormattedMessage id="TopbarDesktop.myProfile" />
+          </NamedLink>
+        </MenuItem>
+      ):(<MenuItem key="ManageListingsPage">
+      <NamedLink
+        className={classNames(css.menuLink)}
+        name="ManageListingsPage"
+      >
+        <span className={css.menuItemBorder} />
+        <FormattedMessage id="TopbarDesktop.myProfile" />
+      </NamedLink>
+    </MenuItem>);
   return (
     <Menu>
       <MenuLabel className={css.profileMenuLabel} isOpenClassName={css.profileMenuIsOpen}>
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
-        {(currentUser!= null) ? <MenuItem key="ProfilePage">
-          <NamedLink
-            className={classNames(css.menuLink, currentPageClass('ProfilePage'))}
-            name="ProfilePage"
-            params={{ id: currentUser?.id?.uuid }}
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.myProfile" />
-          </NamedLink>
-        </MenuItem> : null}
-        
+        {links}
         <MenuItem key="ManageListingsPage">
           <NamedLink
             className={classNames(css.menuLink, currentPageClass('ManageListingsPage'))}
