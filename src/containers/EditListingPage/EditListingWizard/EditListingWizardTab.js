@@ -70,6 +70,7 @@ const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
 
 // When user has update draft listing, he should be redirected to next EditListingWizardTab
 const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, history, routes) => {
+  
   const listingUUID = listingId.uuid;
   const currentPathParams = {
     ...params,
@@ -132,37 +133,61 @@ const EditListingWizardTab = props => {
 
   // New listing flow has automatic redirects to new tab on the wizard
   // and the last panel calls publishListing API endpoint.
-  const automaticRedirectsForNewListingFlow = (tab, listingId) => {
-    if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
+  const automaticRedirectsForNewListingFlow = (tab, listingId, userListingType, userPrice) => {
+    const marketplaceTab = marketplaceTabs[marketplaceTabs.length - 1];
+    if (tab !== marketplaceTab) {
       // Create listing flow: smooth scrolling polyfill to scroll to correct tab
       handleCreateFlowTabScrolling(false);
+      if(tab == "details" && userPrice != 0){
+        const money = userPrice?.amount;
+        console.log("userListingType",userListingType,"money",money);
+        let minimumPrice = 1000;
+        if(userListingType == "weekly-rental"){
+          minimumPrice = 3500;
+        }if(userListingType == "monthly-rental"){
+          minimumPrice = 5000;
+        }
 
-      // After successful saving of draft data, user should be redirected to next tab
-      redirectAfterDraftUpdate(
-        listingId,
-        params,
-        tab,
-        marketplaceTabs,
-        history,
-        routeConfiguration
-      );
+        if(money < minimumPrice){
+          params.tab = "location";
+          redirectAfterDraftUpdate(
+            listingId,
+            params,
+            "location",
+            marketplaceTabs,
+            history,
+            routeConfiguration
+          );
+        }else{
+          redirectAfterDraftUpdate(
+            listingId,
+            params,
+            tab,
+            marketplaceTabs,
+            history,
+            routeConfiguration
+          );
+        }
+      }else{
+        redirectAfterDraftUpdate(
+          listingId,
+          params,
+          tab,
+          marketplaceTabs,
+          history,
+          routeConfiguration
+        );
+      }
     } else {
+      //if the currect section is the end of section, then here
       handlePublishListing(listingId);
     }
   };
 
-  const onCompleteEditListingWizardTab = (tab, updateValues) => {
-    // const onUpdateListingOrCreateListingDraft = isNewURI
-    //   ? (tab, values) => onCreateListingDraft(values, config)
-    //   : (tab, values) => onUpdateListing(tab, values, config);
+  const onCompleteEditListingWizardTab = (tab, updateValues, userListingType, userPrice) => {
     const onUpdateListingOrCreateListingDraft = isNewURI
-    ? (tab, values) => {
-        return onCreateListingDraft(values, config);
-    }
-    : (tab, values) => {
-        return onUpdateListing(tab, values, config);
-    };
-
+      ? (tab, values) => onCreateListingDraft(values, config)
+      : (tab, values) => onUpdateListing(tab, values, config);
 
     const updateListingValues = isNewURI
       ? updateValues
@@ -174,7 +199,12 @@ const EditListingWizardTab = props => {
         // We don't redirect provider immediately after plan is set
         if (isNewListingFlow && tab !== AVAILABILITY) {
           const listingId = r.data.data.id;
-          automaticRedirectsForNewListingFlow(tab, listingId);
+          if(tab == "details" && userPrice != 0){
+            //listing type must be the newest value
+            automaticRedirectsForNewListingFlow(tab,listingId, updateValues?.publicData?.listingType, userPrice);
+          }else{
+            automaticRedirectsForNewListingFlow(tab,listingId, userListingType, userPrice);
+          }
         }
       })
       .catch(e => {
@@ -184,7 +214,7 @@ const EditListingWizardTab = props => {
 
   const panelProps = tab => {
     const userListingType = listing?.attributes?.publicData?.listingType || "";
-
+    const userPrice = listing?.attributes?.price || 0;
     return {
       className: css.panel,
       errors,
@@ -201,8 +231,7 @@ const EditListingWizardTab = props => {
       onManageDisableScrolling,
       userListingType: userListingType,
       onSubmit: values => {
-
-        return onCompleteEditListingWizardTab(tab, values);
+        return onCompleteEditListingWizardTab(tab, values, userListingType, userPrice);
       },
     };
   };
@@ -241,6 +270,7 @@ const EditListingWizardTab = props => {
     case PRICING: {
       const userListingType = listing?.attributes?.publicData?.listingType || "";
       let minimumPrice = config.listingMinimumPriceSubUnits;
+      console.log("PRICING userListingType",userListingType);
       if(userListingType == "daily-rental"){
         minimumPrice = 1000;
       } if(userListingType == "weekly-rental"){

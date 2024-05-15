@@ -292,8 +292,10 @@ const EditListingDetailsPanel = props => {
 
   const noListingTypesSet = listingTypes?.length === 0;
   const hasListingTypesSet = listingTypes?.length > 0;
-  const canShowEditListingDetailsForm =
-    hasListingTypesSet && (!hasExistingListingType || hasValidExistingListingType);
+  const canShowEditListingDetailsForm =true;
+
+    // const canShowEditListingDetailsForm =
+    // hasListingTypesSet && (!hasExistingListingType || hasValidExistingListingType);
   const isPublished = listing?.id && state !== LISTING_STATE_DRAFT;
 
   return (

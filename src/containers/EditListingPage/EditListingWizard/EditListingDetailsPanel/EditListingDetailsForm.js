@@ -70,13 +70,14 @@ const FieldSelectListingType = props => {
     if (onListingTypeChange) {
       onListingTypeChange(selectedListingType);
     }
+    
   };
   const getListingTypeLabel = listingType => {
     const listingTypeConfig = listingTypes.find(config => config.listingType === listingType);
     return listingTypeConfig ? listingTypeConfig.label : listingType;
   };
 
-  return hasMultipleListingTypes && !hasExistingListingType ? (
+  return hasMultipleListingTypes ? (
     <>
       <FieldSelect
         id={name}
@@ -103,17 +104,7 @@ const FieldSelectListingType = props => {
       <FieldHidden name="transactionProcessAlias" />
       <FieldHidden name="unitType" />
     </>
-  ) : hasMultipleListingTypes && hasExistingListingType ? (
-    <div className={css.listingTypeSelect}>
-      <Heading as="h5" rootClassName={css.selectedLabel}>
-        {intl.formatMessage({ id: 'EditListingDetailsForm.listingTypeLabel' })}
-      </Heading>
-      <p className={css.selectedValue}>{getListingTypeLabel(formApi.getFieldState(name)?.value)}</p>
-      <FieldHidden name={name} />
-      <FieldHidden name="transactionProcessAlias" />
-      <FieldHidden name="unitType" />
-    </div>
-  ) : (
+  ): (
     <>
       <FieldHidden name={name} />
       <FieldHidden name="transactionProcessAlias" />
@@ -121,6 +112,53 @@ const FieldSelectListingType = props => {
     </>
   );
 };
+
+
+//   return hasMultipleListingTypes && !hasExistingListingType ? (
+//     <>
+//       <FieldSelect
+//         id={name}
+//         name={name}
+//         className={css.listingTypeSelect}
+//         label={intl.formatMessage({ id: 'EditListingDetailsForm.listingTypeLabel' })}
+//         validate={required(
+//           intl.formatMessage({ id: 'EditListingDetailsForm.listingTypeRequired' })
+//         )}
+//         onChange={handleOnChange}
+//       >
+//         <option disabled value="">
+//           {intl.formatMessage({ id: 'EditListingDetailsForm.listingTypePlaceholder' })}
+//         </option>
+//         {listingTypes.map(config => {
+//           const type = config.listingType;
+//           return (
+//             <option key={type} value={type}>
+//               {config.label}
+//             </option>
+//           );
+//         })}
+//       </FieldSelect>
+//       <FieldHidden name="transactionProcessAlias" />
+//       <FieldHidden name="unitType" />
+//     </>
+//   ) : hasMultipleListingTypes && hasExistingListingType ? (
+//     <div className={css.listingTypeSelect}>
+//       <Heading as="h5" rootClassName={css.selectedLabel}>
+//         {intl.formatMessage({ id: 'EditListingDetailsForm.listingTypeLabel' })}
+//       </Heading>
+//       <p className={css.selectedValue}>{getListingTypeLabel(formApi.getFieldState(name)?.value)}</p>
+//       <FieldHidden name={name} />
+//       <FieldHidden name="transactionProcessAlias" />
+//       <FieldHidden name="unitType" />
+//     </div>
+//   ) : (
+//     <>
+//       <FieldHidden name={name} />
+//       <FieldHidden name="transactionProcessAlias" />
+//       <FieldHidden name="unitType" />
+//     </>
+//   );
+// };
 
 // Finds the correct subcategory within the given categories array based on the provided categoryIdToFind.
 const findCategoryConfig = (categories, categoryIdToFind) => {

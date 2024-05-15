@@ -356,6 +356,9 @@ class EditListingWizard extends Component {
     this.handleCreateFlowTabScrolling = this.handleCreateFlowTabScrolling.bind(this);
     this.handlePublishListing = this.handlePublishListing.bind(this);
     this.handlePayoutModalClose = this.handlePayoutModalClose.bind(this);
+
+    // Bind the new listing type change handler
+    this.handleListingTypeChange = this.handleListingTypeChange.bind(this);
   }
 
   componentDidMount() {
@@ -368,6 +371,11 @@ class EditListingWizard extends Component {
 
   handleCreateFlowTabScrolling(shouldScroll) {
     this.hasScrolledToTab = shouldScroll;
+  }
+
+  //new add
+  handleListingTypeChange(event) {
+    this.setState({ selectedListingType: event });
   }
 
   handlePublishListing(id) {
@@ -525,6 +533,8 @@ class EditListingWizard extends Component {
       return { name: 'EditListingPage', params: { ...params, tab } };
     };
 
+    
+
     const formDisabled = getAccountLinkInProgress;
     const ensuredCurrentUser = ensureCurrentUser(currentUser);
     const currentUserLoaded = !!ensuredCurrentUser.id;
@@ -567,6 +577,7 @@ class EditListingWizard extends Component {
     const returnedNormallyFromStripe = returnURLType === STRIPE_ONBOARDING_RETURN_URL_SUCCESS;
     const returnedAbnormallyFromStripe = returnURLType === STRIPE_ONBOARDING_RETURN_URL_FAILURE;
     const showVerificationNeeded = stripeConnected && requirementsMissing;
+    
 
     // Redirect from success URL to basic path for StripePayoutPage
     if (returnedNormallyFromStripe && stripeConnected && !requirementsMissing) {
@@ -606,7 +617,8 @@ class EditListingWizard extends Component {
                 handleCreateFlowTabScrolling={this.handleCreateFlowTabScrolling}
                 handlePublishListing={this.handlePublishListing}
                 fetchInProgress={fetchInProgress}
-                onListingTypeChange={selectedListingType => this.setState({ selectedListingType })}
+                onListingTypeChange={this.handleListingTypeChange}
+                // onListingTypeChange={selectedListingType => this.setState({ selectedListingType })}
                 onManageDisableScrolling={onManageDisableScrolling}
                 config={config}
                 routeConfiguration={routeConfiguration}
