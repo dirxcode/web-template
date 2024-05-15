@@ -29,6 +29,8 @@ const getPriceValidators = (listingMinimumPriceSubUnits, marketplaceCurrency, in
   const minPriceRaw = new Money(listingMinimumPriceSubUnits, marketplaceCurrency);
 
   const minPrice = formatMoney(intl, minPriceRaw);
+
+  
   
   const priceTooLowMsgId = { id: 'EditListingPricingForm.priceTooLow' };
   const priceTooLowMsg = intl.formatMessage(priceTooLowMsgId, { minPrice });
@@ -77,6 +79,10 @@ export const EditListingPricingFormComponent = props => (
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
 
+      const minDay = new Money(10, 'SGD');
+      const minWeek = new Money(35, 'SGD');
+      const minMonth = new Money(50, 'SGD');
+
       return (
         <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
@@ -103,6 +109,13 @@ export const EditListingPricingFormComponent = props => (
             currencyConfig={appSettings.getCurrencyFormatting(marketplaceCurrency)}
             validate={priceValidators}
           />
+
+          <small className={css.priceInfo}>
+            *Note: Minimum pricing thresholds - 
+            Daily rentals: {"$"+minDay.amount} {minDay.currency} per day,
+            Weekly rentals: {"$"+minWeek.amount} {minWeek.currency} per week,
+            Monthly rentals: {"$"+minMonth.amount} {minMonth.currency} per month.
+          </small>
 
           <Button
             className={css.submitButton}
