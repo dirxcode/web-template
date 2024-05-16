@@ -308,13 +308,6 @@ const AddListingFields = props => {
   }, []);
 
   return <>
-    <Heading as="h4" rootClassName={css.subheading}>
-      {intl.formatMessage({ id: 'EditListingDetailsForm.categories' })}
-    </Heading>
-    <span rootClassName={css.selectedLabel} className={css.info}><i>
-      {intl.formatMessage({ id: 'EditListingDetailsForm.selectCategoriesInfo' })}
-      </i>
-    </span>
     {fields}
   </>;
 };

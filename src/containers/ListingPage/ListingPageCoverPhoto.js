@@ -332,10 +332,6 @@ export const ListingPageComponent = props => {
             </div>
             <SectionTextMaybe text={description} showAsIngress />
             
-            {
-              listingConfig.listingFields.length > 0 ? <SectionHeadingMaybe heading={"Listing Categories : "} showAsIngress /> : null
-            }
-            
             <CustomListingFields
               publicData={publicData}
               metadata={metadata}
