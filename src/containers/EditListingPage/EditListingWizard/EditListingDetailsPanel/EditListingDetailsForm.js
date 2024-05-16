@@ -59,7 +59,15 @@ const FieldHidden = props => {
 // - transactionProcessAlias  Initiate correct transaction against Marketplace API
 // - unitType                 Main use case: pricing unit
 const FieldSelectListingType = props => {
-  const { name, listingTypes, hasExistingListingType, onListingTypeChange, formApi, intl } = props;
+  const {
+    name,
+    listingTypes,
+    hasExistingListingType,
+    onListingTypeChange,
+    formApi,
+    formId,
+    intl,
+  } = props;
   const hasMultipleListingTypes = listingTypes?.length > 1;
 
   const handleOnChange = value => {
@@ -80,7 +88,7 @@ const FieldSelectListingType = props => {
   return hasMultipleListingTypes ? (
     <>
       <FieldSelect
-        id={name}
+        id={formId ? `${formId}.${name}` : name}
         name={name}
         className={css.listingTypeSelect}
         label={intl.formatMessage({ id: 'EditListingDetailsForm.listingTypeLabel' })}
@@ -186,15 +194,22 @@ const CategoryField = props => {
           name={currentCategoryKey}
           className={css.listingTypeSelect}
           onChange={event => handleCategoryChange(event, level, currentCategoryOptions)}
-          label={
-            level == 1
-              ? intl.formatMessage({ id: 'EditListingDetailsForm.categoryLabel' })
-              : intl.formatMessage({ id: 'EditListingDetailsForm.subCategoryLabel' })
-          }
-          validate={required(intl.formatMessage({ id: 'EditListingDetailsForm.categoryRequired' }))}
+          label={intl.formatMessage(
+            { id: 'EditListingDetailsForm.categoryLabel' },
+            { categoryLevel: currentCategoryKey }
+          )}
+          validate={required(
+            intl.formatMessage(
+              { id: 'EditListingDetailsForm.categoryRequired' },
+              { categoryLevel: currentCategoryKey }
+            )
+          )}
         >
           <option disabled value="">
-            {intl.formatMessage({ id: 'EditListingDetailsForm.categoryPlaceholder' })}
+            {intl.formatMessage(
+              { id: 'EditListingDetailsForm.categoryPlaceholder' },
+              { categoryLevel: currentCategoryKey }
+            )}
           </option>
 
           {currentCategoryOptions.map(option => (
@@ -264,7 +279,7 @@ const FieldSelectCategory = props => {
 
 // Add collect data for listing fields (both publicData and privateData) based on configuration
 const AddListingFields = props => {
-  const { listingType, listingFieldsConfig, selectedCategories, intl } = props;
+  const { listingType, listingFieldsConfig, selectedCategories, formId, intl } = props;
   const targetCategoryIds = Object.values(selectedCategories);
 
   const fields = listingFieldsConfig.reduce((pickedFields, fieldConfig) => {
@@ -286,6 +301,7 @@ const AddListingFields = props => {
             defaultRequiredMessage={intl.formatMessage({
               id: 'EditListingDetailsForm.defaultRequiredMessage',
             })}
+            formId={formId}
           />,
         ]
       : pickedFields;
@@ -371,6 +387,7 @@ const EditListingDetailsFormComponent = props => (
             hasExistingListingType={hasExistingListingType}
             onListingTypeChange={onListingTypeChange}
             formApi={formApi}
+            formId={formId}
             intl={intl}
           />
 
@@ -423,6 +440,7 @@ const EditListingDetailsFormComponent = props => (
               listingType={listingType}
               listingFieldsConfig={listingFieldsConfig}
               selectedCategories={pickSelectedCategories(values)}
+              formId={formId}
               intl={intl}
             />
           ) : null}

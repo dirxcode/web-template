@@ -14,6 +14,36 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2024-XX-XX
 
+- [change] Add preview resolution for listing in PreviewResolverPage
+  [#384](https://github.com/sharetribe/web-template/pull/384)
+- [add] Support for a target path parameter (target_path) in the login as user functionality
+  [#383](https://github.com/sharetribe/web-template/pull/383)
+- [change] listingMinimumPriceSubUnits: update code comments (0 is not valid value in hosted asset).
+  [#381](https://github.com/sharetribe/web-template/pull/381)
+- [fix] Styleguide shows multiple versions of some components. The 'id' attributes need to be
+  unique. [#380](https://github.com/sharetribe/web-template/pull/380)
+
+## [v5.0.1] 2024-04-30
+
+- [fix] Fix: currentUser was not passed to billing details, which resulted email address missing on
+  Stripe side. [#377](https://github.com/sharetribe/web-template/pull/377)
+- [fix] currentUserHasListings info. This is an old bug that emerged when we introduced draft status
+  to listing. The fetched listing might not be a published one but a draft listing. The ownListings
+  API endpoint is not queryable to get only published listings but luckily we have introduced
+  authorId filter to listings end point later on.
+  [#376](https://github.com/sharetribe/web-template/pull/376)
+- [add] Update translations for de.json, es.json, and fr.json.
+  [#374](https://github.com/sharetribe/web-template/pull/374)
+- [change] Update one copy text. [#373](https://github.com/sharetribe/web-template/pull/373)
+- [change] EditListingDetailsForm: pass categoryLevel as argument to translations.
+  [#372](https://github.com/sharetribe/web-template/pull/372)
+- [fix] Fix: when changing categories, clear previously saved ones
+  [#371](https://github.com/sharetribe/web-template/pull/371)
+- [fix] util/search.js: fix pickInitialValuesForFieldSelectTree.
+  [#369](https://github.com/sharetribe/web-template/pull/369)
+
+  [v5.0.1]: https://github.com/sharetribe/web-template/compare/v5.0.0...v5.0.1
+
 ## [v5.0.0] 2024-04-23
 
 This major release prepares the codebase for the new concepts: user fields and categories. The
