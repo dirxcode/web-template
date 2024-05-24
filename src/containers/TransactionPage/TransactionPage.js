@@ -26,6 +26,7 @@ import {
   resolveLatestProcessName,
   getProcess,
   isBookingProcess,
+  isCancelableProcess,
 } from '../../transactions/transaction';
 
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
@@ -395,8 +396,6 @@ export const TransactionPageComponent = props => {
   const goToContactUs = () => {
     window.location.href = 'mailto:hello@lendit.sg';
   };
-
-  
 
   const txBookingMaybe = booking?.id ? { booking, dateType, timeZone } : {};
   const orderBreakdownMaybe = hasLineItems

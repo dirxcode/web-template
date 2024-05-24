@@ -55,7 +55,6 @@ export const validURLParamForExtendedData = (
   defaultFilters
 ) => {
   const paramValue = paramValueRaw.toString();
-
   // Price is built-in filter for listing entities
   if (queryParamName === 'price') {
     // Restrict price range to correct min & max
@@ -116,8 +115,10 @@ export const validURLParamForExtendedData = (
 const validURLParamForCategoryData = (prefix, categories, level, params) => {
   const levelKey = constructQueryParamName(`${prefix}${level}`, 'public');
   const levelValue = params?.[levelKey];
+
   const foundCategory = categories.find(cat => cat.id === params?.[levelKey]);
   const subcategories = foundCategory?.subcategories || [];
+
   return foundCategory && subcategories.length > 0
     ? {
         [levelKey]: levelValue,
@@ -127,6 +128,38 @@ const validURLParamForCategoryData = (prefix, categories, level, params) => {
     ? { [levelKey]: levelValue }
     : {};
 };
+
+function searchCategories(query, categories) {
+  const results = [];
+
+  categories.forEach(category => {
+    // Check if category name matches the query
+    let categoryMatches = category.name.toLowerCase().includes(query.toLowerCase());
+    let subcategoryMatches = false;
+    
+    // Check subcategories
+    category.subcategories.forEach(subcategory => {
+      if (subcategory.name.toLowerCase().includes(query.toLowerCase())) {
+        subcategoryMatches = true;
+      }
+
+      // Check sub-subcategories (if any)
+      if (subcategory.subcategories) {
+        subcategory.subcategories.forEach(subSubcategory => {
+          if (subSubcategory.name.toLowerCase().includes(query.toLowerCase())) {
+            subcategoryMatches = true;
+          }
+        });
+      }
+    });
+
+    if (categoryMatches || subcategoryMatches) {
+      results.push(category);
+    }
+  });
+
+  return results;
+}
 
 /**
  * Checks filter param value validity.
@@ -139,7 +172,7 @@ const validURLParamForCategoryData = (prefix, categories, level, params) => {
  */
 export const validFilterParams = (params, filterConfigs, dropNonFilterParams = true) => {
   const { listingFieldsConfig, defaultFiltersConfig, listingCategories } = filterConfigs;
-
+  
   const listingFieldFiltersConfig = listingFieldsConfig.filter(
     config => config.filterConfig?.indexForSearch
   );
@@ -157,6 +190,7 @@ export const validFilterParams = (params, filterConfigs, dropNonFilterParams = t
   // Note: currently, we only support nested enums with a single default filter
   //       that has schema type: "category"
   const categorySearchConfig = defaultFiltersConfig.find(f => f.schemaType === 'category');
+
   const validNestedCategoryParamNames = categorySearchConfig
     ? validURLParamForCategoryData(categorySearchConfig.key, listingCategories, 1, params)
     : {};
@@ -226,6 +260,29 @@ export const validUrlQueryParamsFromProps = props => {
   return validFilterParams(searchInURL, filterConfigs, false);
 };
 
+
+export const validUrlQueryParamsFromProps2 = props => {
+  const { location, config } = props;
+  const { listingFields: listingFieldsConfig } = config?.listing || {};
+  const { defaultFilters: defaultFiltersConfig } = config?.search || {};
+
+  const listingCategories = config.categoryConfiguration.categories;
+  const filterConfigs = {
+    listingFieldsConfig,
+    defaultFiltersConfig,
+    listingCategories,
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const { mapSearch, page, ...searchInURL } = parse(location.search, {
+    latlng: ['origin'],
+    latlngBounds: ['bounds'],
+  });
+  // urlQueryParams doesn't contain page specific url params
+  // like mapSearch, page or origin (origin depends on config.maps.search.sortSearchByDistance)
+  return validFilterParams(searchInURL, filterConfigs, false);
+};
+
 /**
  * Helper to figure out initialValues for Final Form that handles search filters
  *
@@ -235,6 +292,7 @@ export const validUrlQueryParamsFromProps = props => {
  *          It's called from FilterComponent and it returns initial values for the filter.
  */
 export const initialValues = (props, currentQueryParams) => (queryParamNames, isLiveEdit) => {
+  const {pub_categoryLevel1} = currentQueryParams;
   const urlQueryParams = validUrlQueryParamsFromProps(props);
 
   // Get initial value for a given parameter from state if its there.

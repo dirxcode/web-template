@@ -1,6 +1,7 @@
 import { bool, shape, string } from 'prop-types';
 import {
   BOOKING_PROCESS_NAME,
+  CANCELABLE_BOOKING_PROCESS_NAME,
   INQUIRY_PROCESS_NAME,
   PURCHASE_PROCESS_NAME,
   resolveLatestProcessName,
@@ -38,6 +39,8 @@ export const getStateData = params => {
   if (processName === PURCHASE_PROCESS_NAME) {
     return getStateDataForPurchaseProcess(params, processInfo());
   } else if (processName === BOOKING_PROCESS_NAME) {
+    return getStateDataForBookingProcess(params, processInfo());
+  } else if (processName == CANCELABLE_BOOKING_PROCESS_NAME){
     return getStateDataForBookingProcess(params, processInfo());
   } else if (processName === INQUIRY_PROCESS_NAME) {
     return getStateDataForInquiryProcess(params, processInfo());

@@ -23,6 +23,7 @@ import {
   resolveLatestProcessName,
   getProcess,
   isBookingProcess,
+  isCancelableProcess,
 } from '../../transactions/transaction';
 
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
@@ -168,6 +169,7 @@ export const InboxItem = props => {
             <FormattedMessage id="InboxPage.quantity" values={{ quantity }} />
           ) : null}
         </div>
+        
         <div className={css.itemState}>
           <div className={stateClasses}>
             <FormattedMessage

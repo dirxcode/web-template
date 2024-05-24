@@ -251,8 +251,8 @@ export const listingTypes = [
     listingType: 'daily-booking',
     label: 'Daily booking',
     transactionType: {
-      process: 'default-booking',
-      alias: 'default-booking/release-1',
+      process: 'lendit-cancelable-booking',
+      alias: 'lendit-cancelable-booking/release-1',
       unitType: 'day',
     },
     defaultListingFields: {

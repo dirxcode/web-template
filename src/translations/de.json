@@ -1000,6 +1000,7 @@
   "TransactionPage.default-booking.customer.reviewed-by-customer.title": "Deine Buchung wurde abgeschlossen.",
   "TransactionPage.default-booking.customer.reviewed-by-provider.title": "Deine Buchung wurde abgeschlossen.",
   "TransactionPage.default-booking.customer.reviewed.title": "Deine Buchung wurde abgeschlossen.",
+  "TransactionPage.default-booking.customer.transition-cancel-by-customer.actionButton": "Anfrage abbrechen",
   "TransactionPage.default-booking.provider.accepted.title": "Du hast eine Buchungsanfrage von {customerName} angenommen.",
   "TransactionPage.default-booking.provider.canceled.title": "Die Buchung von {customerName} wurde storniert.",
   "TransactionPage.default-booking.provider.declined.title": "Die Anfrage von {customerName} wurde abgelehnt.",

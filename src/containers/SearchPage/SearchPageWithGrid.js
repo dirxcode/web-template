@@ -119,7 +119,7 @@ export class SearchPageComponent extends Component {
       const updater = prevState => {
         const { address, bounds, keywords } = urlQueryParams;
         const mergedQueryParams = { ...urlQueryParams, ...prevState.currentQueryParams };
-
+       
         // Address and bounds are handled outside of MainPanel.
         // I.e. TopbarSearchForm && search by moving the map.
         // We should always trust urlQueryParams with those.

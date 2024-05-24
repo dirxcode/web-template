@@ -1000,6 +1000,7 @@
   "TransactionPage.default-booking.customer.reviewed-by-customer.title": "Tu reserva ha sido completada.",
   "TransactionPage.default-booking.customer.reviewed-by-provider.title": "Tu reserva ha sido completada.",
   "TransactionPage.default-booking.customer.reviewed.title": "Tu reserva ha sido completada.",
+  "TransactionPage.default-booking.customer.transition-cancel-by-customer.actionButton": "Cancelar petición",
   "TransactionPage.default-booking.provider.accepted.title": "Aceptaste una solicitud de reserva de {customerName}.",
   "TransactionPage.default-booking.provider.canceled.title": "La reserva de {customerName} fue cancelada.",
   "TransactionPage.default-booking.provider.declined.title": "La solicitud de {customerName} fue rechazada.",

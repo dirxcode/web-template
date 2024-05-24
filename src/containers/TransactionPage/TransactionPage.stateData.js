@@ -92,8 +92,12 @@ export const getStateData = (params, process) => {
   const isCustomer = transactionRole === 'customer';
   const processName = resolveLatestProcessName(transaction?.attributes?.processName);
 
-  const getActionButtonProps = (transitionName, forRole, extra = {}) =>
-    getActionButtonPropsMaybe(
+  const getActionButtonProps = (transitionName, forRole, extra = {}) => {
+    console.log("getActionButtonProps")
+    console.log("transitionName",transitionName)
+    console.log("forRole",forRole)
+    console.log("extra",extra)
+    return getActionButtonPropsMaybe(
       {
         processName,
         transitionName,
@@ -106,6 +110,8 @@ export const getStateData = (params, process) => {
       },
       forRole
     );
+  }
+    
 
   const getLeaveReviewProps = getActionButtonPropsMaybe({
     processName,

@@ -42,7 +42,17 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
       return { processName, processState, showDetailCardHeadings: true };
     })
     .cond([states.PREAUTHORIZED, CUSTOMER], () => {
-      return { processName, processState, showDetailCardHeadings: true, showExtraInfo: true };
+      console.log("transitions.CANCEL_BY_CUSTOMER",transitions.CANCEL_BY_CUSTOMER)
+      console.log("CUSTOMER",CUSTOMER)
+      const secondary = isCustomerBanned ? null : actionButtonProps(transitions.CANCEL_BY_CUSTOMER, CUSTOMER);
+      return { 
+        processName, 
+        processState, 
+        showDetailCardHeadings: true, 
+        showExtraInfo: true ,
+        showActionButtons: true,
+        secondaryButtonProps: secondary,
+      };
     })
     .cond([states.PREAUTHORIZED, PROVIDER], () => {
       const primary = isCustomerBanned ? null : actionButtonProps(transitions.ACCEPT, PROVIDER);

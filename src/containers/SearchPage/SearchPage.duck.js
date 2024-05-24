@@ -122,13 +122,15 @@ export const searchListings = (searchParams, config) => (dispatch, getState, sdk
     const categoryConfig = config.search.defaultFilters?.find(f => f.schemaType === 'category');
     const categories = config.categoryConfiguration.categories;
     const { key: prefix, scope } = categoryConfig || {};
-    const categoryParamPrefix = constructQueryParamName(prefix, scope);
+    const categoryParamPrefix = constructQueryParamName(prefix, scope);  
 
     const validURLParamForCategoryData = (prefix, categories, level, params) => {
       const levelKey = `${categoryParamPrefix}${level}`;
       const levelValue = params?.[levelKey];
+      
       const foundCategory = categories.find(cat => cat.id === levelValue);
       const subcategories = foundCategory?.subcategories || [];
+ 
       return foundCategory && subcategories.length > 0
         ? {
             [levelKey]: levelValue,
@@ -138,8 +140,8 @@ export const searchListings = (searchParams, config) => (dispatch, getState, sdk
         ? { [levelKey]: levelValue }
         : {};
     };
-
-    const categoryKeys = validURLParamForCategoryData(prefix, categories, 1, params);
+    const categoryKeys = validURLParamForCategoryData(prefix, categories, 1, params);    
+    
     const nonCategoryKeys = Object.entries(params).reduce(
       (picked, [k, v]) => (k.startsWith(categoryParamPrefix) ? picked : { ...picked, [k]: v }),
       {}
@@ -147,6 +149,8 @@ export const searchListings = (searchParams, config) => (dispatch, getState, sdk
 
     return { ...nonCategoryKeys, ...categoryKeys };
   };
+
+  
 
   const priceSearchParams = priceParam => {
     const inSubunits = value => convertUnitToSubUnit(value, unitDivisor(config.currency));

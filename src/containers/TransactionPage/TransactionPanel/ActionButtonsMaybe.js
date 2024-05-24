@@ -48,6 +48,7 @@ const ActionButtonsMaybe = props => {
       {secondaryButtonProps.buttonText}
     </SecondaryButton>
   ) : null;
+  
   const secondaryErrorMessage = secondaryButtonProps?.error ? (
     <p className={css.actionError}>{secondaryButtonProps?.errorText}</p>
   ) : null;

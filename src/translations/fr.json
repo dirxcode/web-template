@@ -1000,6 +1000,7 @@
   "TransactionPage.default-booking.customer.reviewed-by-customer.title": "Votre réservation a été effectuée.",
   "TransactionPage.default-booking.customer.reviewed-by-provider.title": "Votre réservation a été effectuée.",
   "TransactionPage.default-booking.customer.reviewed.title": "Votre réservation a été effectuée.",
+  "TransactionPage.default-booking.customer.transition-cancel-by-customer.actionButton": "Demande d'annulation",
   "TransactionPage.default-booking.provider.accepted.title": "Vous avez accepté une demande de réservation de {customerName}.",
   "TransactionPage.default-booking.provider.canceled.title": "La réservation de {customerName} a été annulée.",
   "TransactionPage.default-booking.provider.declined.title": "La demande de {customerName} a été refusée.",

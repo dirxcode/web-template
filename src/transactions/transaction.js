@@ -3,6 +3,7 @@ import { ensureTransaction } from '../util/data';
 import * as purchaseProcess from './transactionProcessPurchase';
 import * as bookingProcess from './transactionProcessBooking';
 import * as inquiryProcess from './transactionProcessInquiry';
+import * as cancelableBookingProcess from './transactionProcessCancelabelBooking';
 
 // Supported unit types
 // Note: These are passed to translations/microcopy in certain cases.
@@ -17,6 +18,7 @@ export const INQUIRY = 'inquiry';
 export const PURCHASE_PROCESS_NAME = 'default-purchase';
 export const BOOKING_PROCESS_NAME = 'default-booking';
 export const INQUIRY_PROCESS_NAME = 'default-inquiry';
+export const CANCELABLE_BOOKING_PROCESS_NAME = 'lendit-cancelable-booking';
 
 /**
  * A process should export:
@@ -38,17 +40,23 @@ const PROCESSES = [
     process: purchaseProcess,
     unitTypes: [ITEM],
   },
-  {
-    name: BOOKING_PROCESS_NAME,
-    alias: `${BOOKING_PROCESS_NAME}/release-1`,
-    process: bookingProcess,
-    unitTypes: [DAY, NIGHT, HOUR],
-  },
+  // {
+  //   name: BOOKING_PROCESS_NAME,
+  //   alias: `${BOOKING_PROCESS_NAME}/release-1`,
+  //   process: bookingProcess,
+  //   unitTypes: [DAY, NIGHT, HOUR],
+  // },
   {
     name: INQUIRY_PROCESS_NAME,
     alias: `${INQUIRY_PROCESS_NAME}/release-1`,
     process: inquiryProcess,
     unitTypes: [INQUIRY],
+  },
+  {
+    name: BOOKING_PROCESS_NAME,
+    alias: `${CANCELABLE_BOOKING_PROCESS_NAME}/release-1`,
+    process: cancelableBookingProcess,
+    unitTypes: [DAY, NIGHT, HOUR],
   },
 ];
 
@@ -213,6 +221,8 @@ export const resolveLatestProcessName = processName => {
     case 'flex-default-process':
     case 'flex-hourly-default-process':
     case 'flex-booking-default-process':
+    case CANCELABLE_BOOKING_PROCESS_NAME:
+      return CANCELABLE_BOOKING_PROCESS_NAME;
     case BOOKING_PROCESS_NAME:
       return BOOKING_PROCESS_NAME;
     case INQUIRY_PROCESS_NAME:
@@ -289,9 +299,17 @@ export const isPurchaseProcessAlias = processAlias => {
  * @param {String} processName
  */
 export const isBookingProcess = processName => {
+  console.log("processName",processName)
   const latestProcessName = resolveLatestProcessName(processName);
   const processInfo = PROCESSES.find(process => process.name === latestProcessName);
   return [BOOKING_PROCESS_NAME].includes(processInfo?.name);
+};
+
+
+export const isCancelableProcess = processName => {
+  const latestProcessName = resolveLatestProcessName(processName);
+  const processInfo = PROCESSES.find(process => process.name === latestProcessName);
+  return [CANCELABLE_BOOKING_PROCESS_NAME].includes(processInfo?.name);
 };
 
 /**
