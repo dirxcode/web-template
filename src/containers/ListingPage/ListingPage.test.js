@@ -71,7 +71,6 @@ const categories = generateCategories([
   ['fish', [['freshwater', ['grayling', 'arctic-char', 'pike']], 'saltwater']],
   ['birds', ['parrot', 'macaw']],
 ]);
-//console.log(JSON.stringify(categories, null, 2));
 
 const listingFields = [
   {

@@ -27,7 +27,6 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
     actionButtonProps,
     leaveReviewProps,
   } = processInfo;
-
   return new ConditionalResolver([processState, transactionRole])
     .cond([states.INQUIRY, CUSTOMER], () => {
       const transitionNames = Array.isArray(nextTransitions)
@@ -42,8 +41,6 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
       return { processName, processState, showDetailCardHeadings: true };
     })
     .cond([states.PREAUTHORIZED, CUSTOMER], () => {
-      console.log("transitions.CANCEL_BY_CUSTOMER",transitions.CANCEL_BY_CUSTOMER)
-      console.log("CUSTOMER",CUSTOMER)
       const secondary = isCustomerBanned ? null : actionButtonProps(transitions.CANCEL_BY_CUSTOMER, CUSTOMER);
       return { 
         processName, 

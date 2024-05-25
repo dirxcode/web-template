@@ -140,7 +140,6 @@ const EditListingWizardTab = props => {
       handleCreateFlowTabScrolling(false);
       if(tab == "details" && userPrice != 0){
         const money = userPrice?.amount;
-        console.log("userListingType",userListingType,"money",money);
         let minimumPrice = 1000;
         if(userListingType == "weekly-rental"){
           minimumPrice = 3500;
@@ -270,7 +269,6 @@ const EditListingWizardTab = props => {
     case PRICING: {
       const userListingType = listing?.attributes?.publicData?.listingType || "";
       let minimumPrice = config.listingMinimumPriceSubUnits;
-      console.log("PRICING userListingType",userListingType);
       if(userListingType == "daily-rental"){
         minimumPrice = 1000;
       } if(userListingType == "weekly-rental"){

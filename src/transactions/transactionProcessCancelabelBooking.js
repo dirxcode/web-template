@@ -188,6 +188,7 @@ export const transitions = {
       transitions.OPERATOR_COMPLETE,
       transitions.CONFIRM_PAYMENT,
       transitions.DECLINE,
+      transitions.CANCEL_BY_CUSTOMER,
       transitions.OPERATOR_DECLINE,
       transitions.EXPIRE,
       transitions.REVIEW_1_BY_CUSTOMER,

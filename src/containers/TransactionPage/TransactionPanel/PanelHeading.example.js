@@ -18,7 +18,6 @@ const ProcessHeadings = () => {
   const handleChange = e => {
     const name = e.target.name;
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    console.log('handleChange:', name, value);
     setFormData({
       ...formData,
       [name]: value,

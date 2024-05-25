@@ -3,6 +3,8 @@ import {
   BOOKING_PROCESS_NAME,
   INQUIRY_PROCESS_NAME,
   PURCHASE_PROCESS_NAME,
+  CANCELABLE_BOOKING_PROCESS_NAME,
+  isBookingProcess,
   resolveLatestProcessName,
 } from '../../transactions/transaction';
 import { getStateDataForBookingProcess } from './TransactionPage.stateDataBooking.js';
@@ -93,10 +95,6 @@ export const getStateData = (params, process) => {
   const processName = resolveLatestProcessName(transaction?.attributes?.processName);
 
   const getActionButtonProps = (transitionName, forRole, extra = {}) => {
-    console.log("getActionButtonProps")
-    console.log("transitionName",transitionName)
-    console.log("forRole",forRole)
-    console.log("extra",extra)
     return getActionButtonPropsMaybe(
       {
         processName,
@@ -142,6 +140,8 @@ export const getStateData = (params, process) => {
   if (processName === PURCHASE_PROCESS_NAME) {
     return getStateDataForPurchaseProcess(params, processInfo());
   } else if (processName === BOOKING_PROCESS_NAME) {
+    return getStateDataForBookingProcess(params, processInfo());
+  } else if (processName === CANCELABLE_BOOKING_PROCESS_NAME) {
     return getStateDataForBookingProcess(params, processInfo());
   } else if (processName === INQUIRY_PROCESS_NAME) {
     return getStateDataForInquiryProcess(params, processInfo());

@@ -40,12 +40,12 @@ const PROCESSES = [
     process: purchaseProcess,
     unitTypes: [ITEM],
   },
-  // {
-  //   name: BOOKING_PROCESS_NAME,
-  //   alias: `${BOOKING_PROCESS_NAME}/release-1`,
-  //   process: bookingProcess,
-  //   unitTypes: [DAY, NIGHT, HOUR],
-  // },
+  {
+    name: BOOKING_PROCESS_NAME,
+    alias: `${BOOKING_PROCESS_NAME}/release-1`,
+    process: bookingProcess,
+    unitTypes: [DAY, NIGHT, HOUR],
+  },
   {
     name: INQUIRY_PROCESS_NAME,
     alias: `${INQUIRY_PROCESS_NAME}/release-1`,
@@ -53,10 +53,10 @@ const PROCESSES = [
     unitTypes: [INQUIRY],
   },
   {
-    name: BOOKING_PROCESS_NAME,
+    name: CANCELABLE_BOOKING_PROCESS_NAME,
     alias: `${CANCELABLE_BOOKING_PROCESS_NAME}/release-1`,
     process: cancelableBookingProcess,
-    unitTypes: [DAY, NIGHT, HOUR],
+    unitTypes: [DAY],
   },
 ];
 
@@ -213,7 +213,10 @@ const hasPassedState = process => (stateName, tx) => {
  * @param {String} processName
  */
 export const resolveLatestProcessName = processName => {
+  console.log("processName",processName)
+  // return CANCELABLE_BOOKING_PROCESS_NAME;
   switch (processName) {
+  // switch (processName) {
     case 'flex-product-default-process':
     case 'default-buying-products':
     case PURCHASE_PROCESS_NAME:
@@ -221,8 +224,6 @@ export const resolveLatestProcessName = processName => {
     case 'flex-default-process':
     case 'flex-hourly-default-process':
     case 'flex-booking-default-process':
-    case CANCELABLE_BOOKING_PROCESS_NAME:
-      return CANCELABLE_BOOKING_PROCESS_NAME;
     case BOOKING_PROCESS_NAME:
       return BOOKING_PROCESS_NAME;
     case INQUIRY_PROCESS_NAME:
@@ -238,7 +239,9 @@ export const resolveLatestProcessName = processName => {
  */
 export const getProcess = processName => {
   const latestProcessName = resolveLatestProcessName(processName);
+  console.log("latestProcessName",latestProcessName)
   const processInfo = PROCESSES.find(process => process.name === latestProcessName);
+ 
   if (processInfo) {
     return {
       ...processInfo.process,
@@ -299,10 +302,9 @@ export const isPurchaseProcessAlias = processAlias => {
  * @param {String} processName
  */
 export const isBookingProcess = processName => {
-  console.log("processName",processName)
   const latestProcessName = resolveLatestProcessName(processName);
   const processInfo = PROCESSES.find(process => process.name === latestProcessName);
-  return [BOOKING_PROCESS_NAME].includes(processInfo?.name);
+  return [BOOKING_PROCESS_NAME, CANCELABLE_BOOKING_PROCESS_NAME].includes(processInfo?.name);
 };
 
 

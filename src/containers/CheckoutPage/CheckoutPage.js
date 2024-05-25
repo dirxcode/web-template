@@ -45,6 +45,7 @@ const onSubmitCallback = () => {
 };
 
 const getProcessName = pageData => {
+  
   const { transaction, listing } = pageData || {};
   const processName = transaction?.id
     ? transaction?.attributes?.processName
@@ -112,7 +113,6 @@ const EnhancedCheckoutPage = props => {
     });
     return <NamedRedirect name="ListingPage" params={params} />;
   }
-
   const listingTitle = listing?.attributes?.title;
   const authorDisplayName = userDisplayNameAsString(listing?.author, '');
   const title = processName

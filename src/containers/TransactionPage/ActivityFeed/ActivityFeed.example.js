@@ -319,7 +319,6 @@ const PagedFeed = props => {
   const messages = showAllMessages ? [msg1, msg2, msg3, msg4] : [msg2, msg3, msg4];
 
   const handleShowOlder = () => {
-    console.log('show older messages');
     setShowAllMessages(true);
   };
 

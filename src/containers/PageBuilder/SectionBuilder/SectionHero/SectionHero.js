@@ -33,7 +33,6 @@ const SectionHero = props => {
   const fieldComponents = options?.fieldComponents;
   const fieldOptions = { fieldComponents };
 
-  console.log(title.content);
   const hasHeaderFields = hasDataInFields([title, description, callToAction], fieldOptions);
   return (
     <>
