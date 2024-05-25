@@ -16,7 +16,7 @@ const MenuItem = props => {
   const { children, className, rootClassName } = props;
   const rootClass = rootClassName || css.root;
   const classes = classNames(rootClass, className);
-
+  console.log("children, className, rootClassName",children, className, rootClassName)
   return (
     <li className={classes} role="menuitem">
       {children}
