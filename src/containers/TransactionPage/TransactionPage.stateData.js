@@ -3,7 +3,7 @@ import {
   BOOKING_PROCESS_NAME,
   INQUIRY_PROCESS_NAME,
   PURCHASE_PROCESS_NAME,
-  CANCELABLE_BOOKING_PROCESS_NAME,
+  LENDIT_BOOKING_PROCESS_NAME,
   isBookingProcess,
   resolveLatestProcessName,
 } from '../../transactions/transaction';
@@ -141,7 +141,7 @@ export const getStateData = (params, process) => {
     return getStateDataForPurchaseProcess(params, processInfo());
   } else if (processName === BOOKING_PROCESS_NAME) {
     return getStateDataForBookingProcess(params, processInfo());
-  } else if (processName === CANCELABLE_BOOKING_PROCESS_NAME) {
+  } else if (processName === LENDIT_BOOKING_PROCESS_NAME) {
     return getStateDataForBookingProcess(params, processInfo());
   } else if (processName === INQUIRY_PROCESS_NAME) {
     return getStateDataForInquiryProcess(params, processInfo());

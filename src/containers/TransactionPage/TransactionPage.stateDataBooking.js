@@ -41,7 +41,7 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
       return { processName, processState, showDetailCardHeadings: true };
     })
     .cond([states.PREAUTHORIZED, CUSTOMER], () => {
-      const secondary = isCustomerBanned ? null : actionButtonProps(transitions.CANCEL_BY_CUSTOMER, CUSTOMER);
+      const secondary = isCustomerBanned ? null : actionButtonProps(transitions.CUSTOMER_CANCEL, CUSTOMER);
       return { 
         processName, 
         processState, 

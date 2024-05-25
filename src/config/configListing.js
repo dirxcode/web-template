@@ -248,11 +248,37 @@ export const listingFields = [
 
 export const listingTypes = [
   {
-    listingType: 'daily-booking',
-    label: 'Daily booking',
+    listingType: 'daily-rental',
+    label: 'Daily rental',
     transactionType: {
-      process: 'lendit-cancelable-booking',
-      alias: 'lendit-cancelable-booking/release-1',
+      process: 'lendit-new-booking',
+      alias: 'lendit-new-booking/release-1',
+      unitType: 'day',
+    },
+    defaultListingFields: {
+      location: true,
+      payoutDetails: true,
+    },
+  },
+  {
+    listingType: 'weekly-rental',
+    label: 'Weekly rental',
+    transactionType: {
+      process: 'lendit-new-booking',
+      alias: 'lendit-new-booking/release-1',
+      unitType: 'day',
+    },
+    defaultListingFields: {
+      location: true,
+      payoutDetails: true,
+    },
+  },
+  {
+    listingType: 'monthly-rental',
+    label: 'Monthly rental',
+    transactionType: {
+      process: 'lendit-new-booking',
+      alias: 'lendit-new-booking/release-1',
       unitType: 'day',
     },
     defaultListingFields: {
