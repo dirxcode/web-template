@@ -79,14 +79,7 @@ const ProfileMenu = ({ currentPage, currentUser, onLogout }) => {
             <FormattedMessage id="TopbarDesktop.myProfile" />
           </NamedLink>
         </MenuItem>
-      ):(<MenuItem key="ManageListingsPage">
-      <NamedLink
-        className={classNames(css.menuLink)}
-        name="ManageListingsPage">
-        <span className={css.menuItemBorder} />
-        <FormattedMessage id="TopbarDesktop.myProfile" />
-      </NamedLink>
-    </MenuItem>);
+      ):<></>;
   return (
     <Menu>
       <MenuLabel className={css.profileMenuLabel} isOpenClassName={css.profileMenuIsOpen}>
